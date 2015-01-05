@@ -1,0 +1,15 @@
+kutac.monitor.cubes.CurrentSysDataDB.CLS
+kutac.monitor.cubes.HistoryPerfData.CLS
+kutac.monitor.cubes.HistoryPerfDataWD.CLS
+kutac.monitor.cubes.HistorySysData.CLS
+kutac.monitor.cubes.HistorySysDataDB.CLS
+kutac.monitor.current.PerfData.CLS
+kutac.monitor.current.SysDataDB.CLS
+kutac.monitor.history.PerfData.CLS
+kutac.monitor.history.PerfDataWD.CLS
+kutac.monitor.history.SysData.CLS
+kutac.monitor.history.SysDataDB.CLS
+kutac.monitor.kpi.Actions.CLS
+kutac.monitor.library.Dashboards.CLS
+kutac.monitor.library.Pivots.CLS
+kutac.monitor.task.Builder.CLS
