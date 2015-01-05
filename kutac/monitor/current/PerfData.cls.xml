@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<Class name="kutac.monitor.current.PerfData">
+<Description>
+kutac.monitor.current.PerfData</Description>
+<Super>%DeepSee.KPI</Super>
+<TimeCreated>63327,59848.173621</TimeCreated>
+
+<Parameter name="DOMAIN">
+</Parameter>
+
+<Parameter name="RESOURCE">
+</Parameter>
+
+<XData name="KPI">
+<Description>
+This XData definition defines the KPI.</Description>
+<XMLNamespace>http://www.intersystems.com/deepsee/kpi</XMLNamespace>
+<Data><![CDATA[
+<kpi xmlns="http://www.intersystems.com/deepsee/kpi"
+ name="CurrPerfData" sourceType="sql"
+ caption="Current Performance Data"
+ sql="SELECT top 1 * FROM SYS_History.PerfData order by DateTime Desc"
+>
+<property columnNo="1" name="ID" />
+<property columnNo="2" name="DateTime" />
+<property columnNo="3" name="PerfGloRef" />
+</kpi>
+]]></Data>
+</XData>
+
+<Method name="%OnLoadKPI">
+<Description>
+Notification that this KPI is being executed.
+This is a good place to override properties, such as range and threshold.</Description>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[	Quit $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="%OnGetSQL">
+<Description>
+Return an SQL statement to execute.</Description>
+<FormalSpec><![CDATA[&pSQL:%String]]></FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[	Quit $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="%OnDashboardAction">
+<Description>
+This callback is invoked from a dashboard when an action defined by this dashboard is invoked.</Description>
+<ClassMethod>1</ClassMethod>
+<FormalSpec>pAction:%String,pContext:%ZEN.proxyObject</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	// pAction is the name of the action (as defined in the XML list).
+	// pContext contains information from the client
+	// and can be used to return information.
+	Quit $$$OK
+]]></Implementation>
+</Method>
+</Class>
+</Export>

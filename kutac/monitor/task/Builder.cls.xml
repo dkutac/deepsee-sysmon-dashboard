@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<Class name="kutac.monitor.task.Builder">
+<Super>%SYS.Task.Definition</Super>
+<TimeCreated>63544,45910.609546</TimeCreated>
+
+<Method name="OnTask">
+<Description><![CDATA[
+This method is responsible for executing the task.<br>
+At the scheduled time, the Task Manager creates an instance of this object,
+sets any property values using the stored "settings" for the task, and then
+invokes this method to execute the task.<br>
+In order to execute a real task, override this method in a subclass.]]></Description>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	s tSC=$$$OK
+	try {
+		set cubes("CurrentSysDataDB")=""
+		set cubes("HistoryPerfData")=""
+		set cubes("HistoryPerfDataWD")=""
+		set cubes("HistorySysData")=""
+		set cubes("HistorySysDataDB")=""
+		s cube=""
+		for {
+			s cube=$o(cubes(cube)) q:cube=""
+			$$$THROWONERROR(tSC,##class(%DeepSee.Utils).%BuildCube(cube,,0))
+			s ^kutac("SYSMON","LastCubeBuild")=$lb(tSC,$h)
+		}		
+	} catch (e) {
+		set tSC=$$$ADDSC(tSC,e.AsStatus())	
+		s ^kutac("SYSMON","LastCubeBuild")=$lb(e.DisplayString(),$h)
+	}
+	Quit tSC
+]]></Implementation>
+</Method>
+
+<Method name="Setup">
+<Description>
+d ##class(kutac.monitor.task.Builder).Setup()</Description>
+<ClassMethod>1</ClassMethod>
+<Implementation><![CDATA[
+	&sql(select Name from %SYS.Task where Name = 'Rebuild SYSMON Cubes')
+	if +SQLCODE {
+		try {
+			set tTask=##class(%SYS.Task).%New()
+			set tTask.Name="Rebuild SYSMON Cubes"
+			set tTask.DailyFrequency=1
+			set tTask.DailyFrequencyTime=0
+			set tTask.DailyIncrement=15		// run every 15 minutes
+			set tTask.DailyStartTime=28800	// 8AM
+			set tTask.DailyEndTime=64800	// 6PM
+			set tTask.StartDate=+$h+1
+			set tTask.Description="Rebuild System Monitor Cubes"
+			set tTask.NameSpace=$namespace
+			set tTask.TaskClass="kutac.monitor.task.Builder"
+			$$$THROWONERROR(tSC,tTask.%Save())
+		} catch (ex) {
+			w !,ex.DisplayString()
+		}
+	}
+	quit
+]]></Implementation>
+</Method>
+</Class>
+</Export>

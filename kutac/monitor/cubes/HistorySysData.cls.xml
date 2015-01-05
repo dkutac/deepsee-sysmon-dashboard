@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<Class name="kutac.monitor.cubes.HistorySysData">
+<Description>
+</Description>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>%DeepSee.CubeDefinition</Super>
+<TimeCreated>63539,56609.115575</TimeCreated>
+<DependsOn>kutac.monitor.history.SysData</DependsOn>
+
+<Parameter name="DOMAIN">
+</Parameter>
+
+<XData name="Cube">
+<Description>
+Cube definition from Architect.</Description>
+<XMLNamespace>http://www.intersystems.com/deepsee</XMLNamespace>
+<Data><![CDATA[
+<cube xmlns="http://www.intersystems.com/deepsee" name="HistorySysData" displayName="HistorySysData" disabled="false" abstract="false" sourceClass="kutac.monitor.history.SysData" countMeasureName="%COUNT" bucketSize="8" bitmapChunkInMemory="false" precompute="0">
+  <dimension name="Measurement Date" disabled="false" hasAll="false" allCaption="All Measurement Date and Time" allDisplayName="Measurement Date and Time" sourceProperty="mTS" type="time" iKnowType="entity" hidden="false" showHierarchies="default">
+    <hierarchy name="H1" disabled="false">
+      <level name="Month" disabled="false" timeFunction="MonthYear" list="false" useDisplayValue="true" useAsFilter="true">
+      </level>
+      <level name="Day" disabled="false" timeFunction="DayNumber" list="false" useDisplayValue="true" useAsFilter="true">
+      </level>
+    </hierarchy>
+  </dimension>
+  <dimension name="Measurement Time" disabled="false" hasAll="false" allCaption="All TM" allDisplayName="TM" sourceProperty="mTS" type="time" iKnowType="entity" hidden="false" showHierarchies="default">
+    <hierarchy name="H1" disabled="false">
+      <level name="Hour" disabled="false" timeFunction="HourNumber" list="false" useDisplayValue="true" useAsFilter="true">
+      </level>
+      <level name="Minute" disabled="false" timeFunction="MinuteNumber" list="false" useDisplayValue="true" useAsFilter="true">
+      </level>
+    </hierarchy>
+  </dimension>
+  <measure sourceProperty="SysAlerts" name="SysAlerts" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="SysAppErrors" name="SysAppErrors" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="SysCPUIdle" name="SysCPUIdle" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="SysCPUKernel" name="SysCPUKernel" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="SysCPUUser" name="SysCPUUser" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="SysCSPSession" name="SysCSPSession" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="SysECPResponse" name="SysECPResponse" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="SysJrnFiles" name="SysJrnFiles" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="SysJrnSize" name="SysJrnSize" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="SysLicUsedDist" name="SysLicUsedDist" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="SysLicUsedLocal" name="SysLicUsedLocal" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="SysProcesses" name="SysProcesses" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+</cube>
+]]></Data>
+</XData>
+</Class>
+</Export>

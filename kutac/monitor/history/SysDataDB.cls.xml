@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<Class name="kutac.monitor.history.SysDataDB">
+<Super>%DeepSee.DataConnector</Super>
+<TimeCreated>63327,55338.349448</TimeCreated>
+
+<Parameter name="SUPPORTSIDLIST">
+<Default>1</Default>
+</Parameter>
+
+<XData name="SourceQuery">
+<XMLNamespace>http://www.intersystems.com/deepsee/connector/query</XMLNamespace>
+<Data><![CDATA[<sql>SELECT db.*,d.datetime FROM SYS_History.SysData_DB db,SYS_History.SysData d WHERE db.SysData = d.id order by datetime desc</sql>
+]]></Data>
+</XData>
+
+<XData name="Output">
+<XMLNamespace>http://www.intersystems.com/deepsee/connector/output</XMLNamespace>
+<Data><![CDATA[
+<connector>
+<property name="%ID" sourceProperty="ID" description="Record ID" />
+<property name="mTS" sourceProperty="DateTime" type="%TimeStamp" description="Measurement DateTime"/>
+<property name="Name" sourceProperty="element_key" type="%String" description="Database name"/>
+<property name="FileSize" sourceProperty="DB_FileSize" type="%Numeric" description="Database file size (in MB)"/>
+<property name="FreeSpace" sourceProperty="DB_FreeSpace" type="%Numeric" description="Database free space (in MB)"/>
+</connector>
+]]></Data>
+</XData>
+</Class>
+</Export>

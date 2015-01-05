@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<Class name="kutac.monitor.kpi.Actions">
+<Description>
+kutac.monitor.kpi.Actions</Description>
+<Super>%DeepSee.KPI</Super>
+<TimeCreated>63539,37088.160357</TimeCreated>
+
+<Parameter name="DOMAIN">
+<Default>sysmon</Default>
+</Parameter>
+
+<Parameter name="RESOURCE">
+</Parameter>
+
+<XData name="KPI">
+<Description>
+This XData definition defines the KPI.</Description>
+<XMLNamespace>http://www.intersystems.com/deepsee/kpi</XMLNamespace>
+<Data><![CDATA[
+<kpi xmlns="http://www.intersystems.com/deepsee/kpi"
+ name="SYSMON Actions" sourceType="manual">
+ 
+ <property name="Monitor" displayName="System Monitor" columnNo="1" />
+ <property name="Sensors" displayName="System Sensors" columnNo="2" />
+ <property name="AppMonSensor" displayName="Application Monitor Sensor" columnNo="3" />
+ <property name="HealthControl" displayName="Health Control" columnNo="4" />
+ <property name="Subscriber" displayName="System Subscriber" columnNo="5" />
+ <property name="LastCubeBuildTime" displayName="Last Cubes Build Time" columnNo="6" />
+ <property name="LastCubeBuildStatus" displayName="Last Cubes Build Status" columnNo="7" />
+ 
+ <action name="SyncCubes" />
+ 
+</kpi>
+]]></Data>
+</XData>
+
+<Method name="%OnLoadKPI">
+<Description>
+Notification that this KPI is being executed.
+This is a good place to override properties, such as range and threshold.</Description>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[	Quit $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="%OnGetSQL">
+<Description>
+Return an MDX statement to execute.</Description>
+<FormalSpec><![CDATA[&pSQL:%String]]></FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	
+	Quit $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="%OnDashboardAction">
+<Description>
+This callback is invoked from a dashboard when an action defined by this dashboard is invoked.</Description>
+<ClassMethod>1</ClassMethod>
+<FormalSpec>pAction:%String,pContext:%ZEN.proxyObject</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	// pAction is the name of the action (as defined in the XML list).
+	// pContext contains information from the client
+	// and can be used to return information.
+	s tSC=$$$OK
+	try {
+		if pAction="SyncCubes" {
+			set tTask=##class(kutac.monitor.task.Builder).%New()
+			$$$THROWONERROR(tSC,tTask.OnTask())
+		}
+	} catch (e) {
+		set tSC=$$$ADDSC(tSC,e.AsStatus())	
+	}
+	Quit tSC
+]]></Implementation>
+</Method>
+
+<Method name="%OnExecute">
+<Description>
+Get data for this KPI manually.
+This is implemented by subclasses that provide manual data.</Description>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	Set tSC = $$$OK
+	#define D1	"|"
+	#define D2 "^"
+	Try {
+		set ..%seriesCount=1
+		set ..%seriesNames(1)="State Info"
+		set tState=##class(%SYS.Monitor).State()
+		set i=1 s ..%data(1,"Monitor")=$p($p(tState,$$$D2,i),$$$D1,2)
+		set i=2 s ..%data(1,"Sensors")=$p($p(tState,$$$D2,i),$$$D1,2)
+		set i=3 s ..%data(1,"AppMonSensor")=$s($p($p(tState,$$$D2,i),$$$D1,2)=" ":"none",1:$p($p(tState,$$$D2,i),$$$D1,2))
+		set i=4 s ..%data(1,"HealthControl")=$p($p(tState,$$$D2,i),$$$D1,2)
+		set i=5 s ..%data(1,"Subscriber")=$p($p(tState,$$$D2,i),$$$D1,2)
+		set i=6 s ..%data(1,"LastCubeBuildTime")=$s($lg(^kutac("SYSMON","LastCubeBuild"))="":"n/a",1:$zdt($lg(^kutac("SYSMON","LastCubeBuild"),2)))
+		set i=7 s ..%data(1,"LastCubeBuildStatus")=$lg(^kutac("SYSMON","LastCubeBuild"),1)
+	}
+	Catch(ex) {
+		Set tSC = ex.AsStatus()
+	}
+	Quit tSC
+]]></Implementation>
+</Method>
+</Class>
+</Export>

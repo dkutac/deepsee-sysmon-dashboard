@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<Class name="kutac.monitor.cubes.HistoryPerfData">
+<Description>
+</Description>
+<ProcedureBlock>1</ProcedureBlock>
+<Super>%DeepSee.CubeDefinition</Super>
+<TimeCreated>63327,55773.939425</TimeCreated>
+<DependsOn>kutac.monitor.history.PerfData</DependsOn>
+
+<Parameter name="DOMAIN"/>
+
+<XData name="Cube">
+<Description>
+Cube definition from Architect.</Description>
+<XMLNamespace>http://www.intersystems.com/deepsee</XMLNamespace>
+<Data><![CDATA[
+<cube xmlns="http://www.intersystems.com/deepsee" name="HistoryPerfData" displayName="HistoryPerfData" disabled="false" abstract="false" sourceClass="kutac.monitor.history.PerfData" countMeasureName="%COUNT" bucketSize="8" bitmapChunkInMemory="false" precompute="0">
+  <dimension name="Measurement Date" disabled="false" hasAll="false" allCaption="All Measurement Date and Time" allDisplayName="Measurement Date and Time" sourceProperty="mTS" type="time" iKnowType="entity" hidden="false" showHierarchies="default">
+    <hierarchy name="H1" disabled="false">
+      <level name="Month" disabled="false" timeFunction="MonthYear" list="false" useDisplayValue="true" useAsFilter="true">
+      </level>
+      <level name="Day" disabled="false" timeFunction="DayNumber" list="false" useDisplayValue="true" useAsFilter="true">
+      </level>
+    </hierarchy>
+  </dimension>
+  <dimension name="Measurement Time" disabled="false" hasAll="false" allCaption="All TM" allDisplayName="TM" sourceProperty="mTS" type="time" iKnowType="entity" hidden="false" showHierarchies="default">
+    <hierarchy name="H1" disabled="false">
+      <level name="Hour" disabled="false" timeFunction="HourNumber" list="false" useDisplayValue="true" useAsFilter="true">
+      </level>
+      <level name="Minute" disabled="false" timeFunction="MinuteNumber" list="false" useDisplayValue="true" useAsFilter="true">
+      </level>
+    </hierarchy>
+  </dimension>
+  <measure sourceProperty="PerfGloRef" name="PerfGloRef" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false" iKnowSource="string"></measure>
+  <measure sourceProperty="PerfGloRefRem" name="PerfGloRefRem" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false" iKnowSource="string"></measure>
+  <measure sourceProperty="PerfPhysReads" name="PerfPhysReads" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfPhysWrites" name="PerfPhysWrite" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfRtnCallLocal" name="PerfRtnCallLocal" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfRtnCallRemote" name="PerfRtnCallRemote" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfRtnLoad" name="PerfRtnLoad" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfRtnLoadRem" name="PerfRtnLoadRem" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfObjLoad" name="PerfObjLoad" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfObjMiss" name="PerfObjMiss" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfObjNew" name="PerfObjNew" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfObjDel" name="PerfObjDel" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfWIJWrites" name="PerfWIJWrites" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfECPBlockPurgeBuff" name="PerfECPBlockPurgeBuff" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfECPBlockPurgeSvr" name="PerfECPBlockPurgeSvr" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfECPByteRcvd" name="PerfECPByteRcvd" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfECPByteSent" name="PerfECPByteSent" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfECPConn" name="PerfECPConn" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfGloASeize" name="PerfGloASeize" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfGloNSeize" name="PerfGloNSeize" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfGloSeize" name="PerfGloSeize" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfObjASeize" name="PerfObjASeize" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfObjSeize" name="PerfObjSeize" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfRtnASeize" name="PerfRtnASeize" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfRtnSeize" name="PerfRtnSeize" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfJrnBlock" name="PerfJrnBlock" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfJrnEntry" name="PerfJrnEntry" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure sourceProperty="PerfObjHit" name="PerfObjHit" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <listing name="Details" disabled="false" listingType="table" fieldList="%ID,mDate,mTime,PerfGloRef"></listing>
+</cube>
+]]></Data>
+</XData>
+</Class>
+</Export>
