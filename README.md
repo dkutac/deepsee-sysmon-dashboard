@@ -1,6 +1,4 @@
-cache-projects
+deepsee-sysmon-dashboard
 ==============
 
-My Cache projects
-
-1. DeepSee set of dashboards for data collected by %SYSMONMGR utility
+A small set od DeepSee dashboards for selected system monitor metrics - data collected by %SYSMONMGR utility
