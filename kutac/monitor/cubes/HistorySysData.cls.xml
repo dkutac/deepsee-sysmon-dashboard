@@ -33,6 +33,12 @@ Cube definition from Architect.</Description>
       </level>
     </hierarchy>
   </dimension>
+  <dimension name="mTS" disabled="false" hasAll="false" allCaption="All mTS" allDisplayName="mTS" type="data" hidden="false" showHierarchies="default">
+    <hierarchy name="H1" disabled="false">
+      <level sourceProperty="mTS" name="mTS" disabled="false" list="false" useDisplayValue="true" useAsFilter="true">
+      </level>
+    </hierarchy>
+  </dimension>
   <measure sourceProperty="SysAlerts" name="SysAlerts" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
   <measure sourceProperty="SysAppErrors" name="SysAppErrors" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
   <measure sourceProperty="SysCPUIdle" name="SysCPUIdle" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
