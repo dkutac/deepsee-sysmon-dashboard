@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<Document name="mobile-SysParamsPerf.dashboard.DFI">
+<dashboard xmlns="http://www.intersystems.com/deepsee/library" name="SysParamsPerf" folderName="mobile" title="Various System Parameters Performance" description="" keywords="" owner="" shared="true" public="true" locked="false" resource="" timeCreated="2015-06-16T09:20:47.834Z" createdBy="UnknownUser" category="" bookCover="" scheme="" worklistCount="0" snapTo="true" snapGrid="true" gridRows="10" gridCols="10" canResize="true" canModify="true" showTitleBar="true" companyName="" companyLogo="" companyStyle="">
+  <widget name="Виджет1" type="pivot" subtype="timeChart" subtypeClass="comboChart" title="" dataSource="pivots/monitor/history/fortc/ParamsMinutes.pivot" dataLink="" drillDownDataSource="" width="200" height="200" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="10" rowSpanL="5" showToolbar="true" theme="" dataColorList="">
+  </widget>
+</dashboard>
+</Document></Export>
