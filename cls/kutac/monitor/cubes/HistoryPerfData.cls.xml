@@ -8,8 +8,7 @@
 <TimeCreated>63327,55773.939425</TimeCreated>
 <DependsOn>kutac.monitor.history.PerfData</DependsOn>
 
-<Parameter name="DOMAIN">
-</Parameter>
+<Parameter name="DOMAIN"/>
 
 <XData name="Cube">
 <Description>
@@ -35,7 +34,7 @@ Cube definition from Architect.</Description>
   </dimension>
   <dimension name="mTS" disabled="false" hasAll="false" allCaption="All mTS" allDisplayName="mTS" type="data" hidden="false" showHierarchies="default">
     <hierarchy name="H1" disabled="false">
-      <level sourceProperty="mTS" name="mTS" disabled="false" list="false" useDisplayValue="true" useAsFilter="true">
+      <level sourceExpression="%source.mTS" name="mTS" disabled="false" list="false" useDisplayValue="true" useAsFilter="true">
       </level>
     </hierarchy>
   </dimension>
