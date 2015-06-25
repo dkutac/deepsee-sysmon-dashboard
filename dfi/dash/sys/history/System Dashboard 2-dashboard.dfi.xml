@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<Document name="dash-sys-history-System Dashboard 2.dashboard.DFI">
+<dashboard xmlns="http://www.intersystems.com/deepsee/library" name="System Dashboard 2" folderName="dash/sys/history" title="" description="" keywords="" owner="" shared="true" public="true" locked="false" resource="" timeCreated="2014-12-22T10:11:30.232Z" createdBy="kutac" category="System" bookCover="{background: {style:&apos;background-color:white;opacity:0.19;&apos;,src:&apos;covers/14865209_s.jpg&apos;},header: {text:&apos;$type&apos;},title: {text:&apos;$title&apos;},image: {src:&apos;deepsee/ds2_dashboard_44.png&apos;,imageStyle:&apos;width:64px;height:64px;&apos;},subtitle: {text:&apos;Various Metrics&apos;,style:&apos;color:rgb(209, 29, 0);&apos;},footer: {text:&apos;$owner&apos;}}" scheme="" worklistCount="0" snapTo="true" snapGrid="true" gridRows="10" gridCols="10" canResize="true" canModify="true" showTitleBar="true" companyName="" companyLogo="" companyStyle="">
+  <widget name="Widget1" type="pivot" subtype="lineChart" subtypeClass="lineChart" title="Various System Metrics" dataSource="pivots/monitor/history/SysVarious.pivot" dataLink="" drillDownDataSource="" width="200" height="200" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="10" rowSpanL="10" showToolbar="true" theme="" dataColorList="">
+    <control name="" action="applyFilter" target="*" targetProperty="[Measurement Date].[H1].[Month]" location="widget" type="auto" controlClass="" label="Month" title="" value="&amp;[NOW]" text="" readOnly="false" valueList="" displayList="" activeWhen=""></control>
+    <control name="" action="applyFilter" target="*" targetProperty="[Measurement Date].[H1].[Day]" location="widget" type="auto" controlClass="" label="Day" title="" value="&amp;[NOW]" text="" readOnly="false" valueList="" displayList="" activeWhen=""></control>
+    <control name="" action="applyFilter" target="*" targetProperty="[Measurement Time].[H1].[Hour]" location="widget" type="auto" controlClass="" label="Hour" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen=""></control>
+    <property name="legendPos">bottom</property>
+  </widget>
+</dashboard>
+</Document></Export>

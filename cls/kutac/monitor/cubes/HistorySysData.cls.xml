@@ -8,8 +8,7 @@
 <TimeCreated>63539,56609.115575</TimeCreated>
 <DependsOn>kutac.monitor.history.SysData</DependsOn>
 
-<Parameter name="DOMAIN">
-</Parameter>
+<Parameter name="DOMAIN"/>
 
 <XData name="Cube">
 <Description>
@@ -17,7 +16,7 @@ Cube definition from Architect.</Description>
 <XMLNamespace>http://www.intersystems.com/deepsee</XMLNamespace>
 <Data><![CDATA[
 <cube xmlns="http://www.intersystems.com/deepsee" name="HistorySysData" displayName="HistorySysData" disabled="false" abstract="false" sourceClass="kutac.monitor.history.SysData" countMeasureName="%COUNT" bucketSize="8" bitmapChunkInMemory="false" precompute="0">
-  <dimension name="Measurement Date" disabled="false" hasAll="false" allCaption="All Measurement Date and Time" allDisplayName="Measurement Date and Time" sourceProperty="mTS" type="time" iKnowType="entity" hidden="false" showHierarchies="default">
+  <dimension name="Measurement Date" disabled="false" hasAll="false" allCaption="All Measurement Date and Time" allDisplayName="Measurement Date and Time" sourceExpression="$zdth(%source.mTS,3)" type="time" iKnowType="entity" hidden="false" showHierarchies="default">
     <hierarchy name="H1" disabled="false">
       <level name="Month" disabled="false" timeFunction="MonthYear" list="false" useDisplayValue="true" useAsFilter="true">
       </level>
@@ -25,11 +24,17 @@ Cube definition from Architect.</Description>
       </level>
     </hierarchy>
   </dimension>
-  <dimension name="Measurement Time" disabled="false" hasAll="false" allCaption="All TM" allDisplayName="TM" sourceProperty="mTS" type="time" iKnowType="entity" hidden="false" showHierarchies="default">
+  <dimension name="Measurement Time" disabled="false" hasAll="false" allCaption="All TM" allDisplayName="TM" sourceExpression="$zdth(%source.mTS,3)" type="time" iKnowType="entity" hidden="false" showHierarchies="default">
     <hierarchy name="H1" disabled="false">
       <level name="Hour" disabled="false" timeFunction="HourNumber" list="false" useDisplayValue="true" useAsFilter="true">
       </level>
       <level name="Minute" disabled="false" timeFunction="MinuteNumber" list="false" useDisplayValue="true" useAsFilter="true">
+      </level>
+    </hierarchy>
+  </dimension>
+  <dimension name="mTS" disabled="false" hasAll="false" allCaption="All mTS" allDisplayName="mTS" type="data" hidden="false" showHierarchies="default">
+    <hierarchy name="H1" disabled="false">
+      <level sourceExpression="%source.mTS" name="mTS" disabled="false" list="false" useDisplayValue="true" useAsFilter="true">
       </level>
     </hierarchy>
   </dimension>

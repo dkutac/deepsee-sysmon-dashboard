@@ -8,7 +8,8 @@
 <TimeCreated>63536,55156.012674</TimeCreated>
 <DependsOn>kutac.monitor.current.SysDataDB</DependsOn>
 
-<Parameter name="DOMAIN"/>
+<Parameter name="DOMAIN">
+</Parameter>
 
 <XData name="Cube">
 <Description>
@@ -22,7 +23,7 @@ Cube definition from Architect.</Description>
       </level>
     </hierarchy>
   </dimension>
-  <dimension name="Measurement Date" disabled="false" hasAll="false" allCaption="All Measurement Date and Time" allDisplayName="Measurement Date and Time" sourceProperty="mTS" type="time" iKnowType="entity" hidden="false" showHierarchies="default">
+  <dimension name="Measurement Date" disabled="false" hasAll="false" allCaption="All Measurement Date and Time" allDisplayName="Measurement Date and Time" sourceExpression="$zdth(%source.mTS,3)" type="time" iKnowType="entity" hidden="false" showHierarchies="default">
     <hierarchy name="H1" disabled="false">
       <level name="Month" disabled="false" timeFunction="MonthYear" list="false" useDisplayValue="true" useAsFilter="true">
       </level>
@@ -30,7 +31,7 @@ Cube definition from Architect.</Description>
       </level>
     </hierarchy>
   </dimension>
-  <dimension name="Measurement Time" disabled="false" hasAll="false" allCaption="All TM" allDisplayName="TM" sourceProperty="mTS" type="time" iKnowType="entity" hidden="false" showHierarchies="default">
+  <dimension name="Measurement Time" disabled="false" hasAll="false" allCaption="All TM" allDisplayName="TM" sourceExpression="$zdth(%source.mTS,3)" type="time" iKnowType="entity" hidden="false" showHierarchies="default">
     <hierarchy name="H1" disabled="false">
       <level name="Hour" disabled="false" timeFunction="HourNumber" list="false" useDisplayValue="true" useAsFilter="true">
       </level>
