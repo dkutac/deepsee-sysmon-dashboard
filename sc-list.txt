@@ -13,3 +13,4 @@ kutac.monitor.kpi.Actions.CLS
 kutac.monitor.library.Dashboards.CLS
 kutac.monitor.library.Pivots.CLS
 kutac.monitor.task.Builder.CLS
+kutac.monitor.utils.Installer.CLS
