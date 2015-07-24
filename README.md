@@ -45,8 +45,18 @@ On this step installer would create (if needed) Namespace and corresponding data
 Default Settings
 ----------------
 
-After mapping kutac package to %All namespace, namespaces %SYS and {Namespace} will be defined as startup namespaces for monitor. Then, the installer activates in the %SYS" following monitors:
-    
+After mapping kutac package to %All namespace, namespaces %SYS and {Namespace} will be defined as startup namespaces for monitor. Then, the installer activates in the namespace %SYS" following monitor classes:
+
+* %Monitor.System.HistoryPerf
+* %Monitor.System.Diskspace
+* %Monitor.System.License
+* %Monitor.System.Processes
+* %Monitor.System.HistorySys
+* %Monitor.System.Freespace
+* %Monitor.System.LockTable
+* %Monitor.System.Routines
+
+The next step is starting monitor. Your namespace will appear in the list of accessible namespaces for DeepSee and you can see different dashboards there. However, if you open User Portal in the DeepSee immediately after installing, you will notice that all dashboards will be empty. You need to wait a little time, because the installer runs the task for rebuilding cubes in 1 minute after installing. This task will run every 3 hours for updating information for monitor dashboards.
 
 
 
