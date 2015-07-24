@@ -21,7 +21,7 @@ Installation
         
 Installation without fs access to server
 -----------
-1. Download Installer.cls.xml (from deepsee-sysmon-dashboards folder in repository or releases page) into Caché Studio (any namespace)
+1. Download Installer.cls.xml (from cls/kutac/monitor/utils folder in repository or releases page) into Caché Studio (any namespace)
 2. Run in terminal (any namespace) under user with %All role: 
 
         set pVars("Namespace")="{Namespace}"
@@ -38,7 +38,7 @@ Offline Installation
 1. Download zip and unpack it.
 2. Run in terminal (any namespace) under user with %All role:
 
-        do ##class(%Installer.Installer).InstallFromCommandLine("{SourceDir}cls\kutac\monitor\utils\Installer.cls.xml","Namespace={Namespace},SourceDir={SourceDir}")
+        do ##class(%Installer.Installer).InstallFromCommandLine("{SourceDir}\cls\kutac\monitor\utils\Installer.cls.xml","Namespace={Namespace},SourceDir={SourceDir}")
 
 On this step installer would create (if needed) Namespace and corresponding database, import source code and compile it, create required web application (named /cls/{Namespace}) if one does not exist (skipping web application creation process if one does exist), and map kutac package to %All namespace (which will be created if it does not exist).
 
