@@ -21,11 +21,11 @@ Installation
         
 Installation without fs access to server
 -----------
-1. Download Installer.cls.xml (from MDX2JSON folder in repository or releases page) into Caché Studio (any namespace)
+1. Download Installer.cls.xml (from deepsee-sysmon-dashboards folder in repository or releases page) into Caché Studio (any namespace)
 2. Run in terminal (any namespace) under user with %All role: 
 
         set pVars("Namespace")="{Namespace}"
-        do ##class(MDX2JSON.Installer).setup(.pVars)
+        do ##class(kutac.monitor.utils.Installer).setup(.pVars)
 
     where: 
     
