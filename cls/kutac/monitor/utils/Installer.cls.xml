@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2015.1 (Build 429U)" ts="2015-07-23 18:15:29">
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2015.1 (Build 429U)" ts="2015-07-24 13:06:58">
 <Class name="cls.kutac.monitor.utils.Installer">
-<TimeChanged>63756,59616.718811</TimeChanged>
+<TimeChanged>63757,47200.76574</TimeChanged>
 <TimeCreated>63732,50627.865496</TimeCreated>
 
 <XData name="Install">
@@ -114,7 +114,6 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 <Implementation><![CDATA[
 	Set namespace = $Namespace
  	Set SSLConfig = "GitHub"
- 	
  	Zn "%SYS"
  	Do:'##class(Security.SSLConfigs).Exists(SSLConfig) ##class(Security.SSLConfigs).Create(SSLConfig)
 
@@ -227,10 +226,12 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 	write !, "Starting Monitor"
 	set st3 = ..RunningMonitor()
 	write !, "Creating Task"
+	Do tInstaller.PopNS()
+	Do tInstaller.PushNS(Namespace)
 	set st4 = ..CreateTask()
+	Do tInstaller.PopNS()
 	set st = $$$ADDSC(st4, $$$ADDSC(st1, $$$ADDSC(st2, st3)))
 	if $$$ISERR(st) Throw ##class(%Installer.Exception).CreateFromStatus(st)
-	Do tInstaller.PopNS()
     quit $$$OK
 ]]></Implementation>
 </Method>
@@ -312,9 +313,11 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 
 <Method name="CreateTask">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>min:%Integer=180</FormalSpec>
+<FormalSpec>hrs:%Integer=3</FormalSpec>
 <ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[	q ##class(%DeepSee.CubeManager.Task.Synch).Schedule(0, 1, 1, min, $p($H,",",2) + 60, 0)
+<Implementation><![CDATA[
+	
+	q ##class(%DeepSee.CubeManager.Task.Synch).Schedule(0, 1, 1, hrs, ($p($H, ",", 2) + 60) # 10800, 0)
 ]]></Implementation>
 </Method>
 </Class>
