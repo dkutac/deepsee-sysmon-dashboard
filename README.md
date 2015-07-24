@@ -15,8 +15,21 @@ Installation
         
     where:
   
-        {Namespace} is a namespace you want to install to. If it does not exist it would be created automatically. If it does exist only kutac package would be overwritten. On this step installer would create (if needed) Namespace and corresponding database, download source code from GitHub and compile it, create required web application (named /cls/{Namespace}) if one does not exist (skipping web application creation process if one does exist), and map kutac package to %All namespace (which will be created if it does not exist).
+        {Namespace} is a namespace you want to install to. If it does not exist it would be created automatically. If it does exist only kutac package would be overwritten. If {Namespace} is not defined, then SYSMON namespace will be created. On this step installer would create (if needed) Namespace and corresponding database, download source code from GitHub and compile it, create required web application (named /cls/{Namespace}) if one does not exist (skipping web application creation process if one does exist), and map kutac package to %All namespace (which will be created if it does not exist).
         
+        
+Installation without fs access to server
+-----------
+1. Download Installer.cls.xml (from MDX2JSON folder in repository or releases page) into Caché Studio (any namespace)
+2. Run in terminal (any namespace) under user with %All role: 
+
+        set pVars("Namespace")="{Namespace}"
+        do ##class(MDX2JSON.Installer).setup(.pVars)
+
+    where: 
+    
+        {Namespace} is a namespace you want to install to. If it does not exist it would be created automatically. If it does exist only kutac package would be overwritten. If {Namespace} is not defined, then SYSMON namespace will be created. On this step installer would create (if needed) Namespace and corresponding database, download source code from GitHub and compile it, create required web application (named /cls/{Namespace}) if one does not exist (skipping web application creation process if one does exist), and map kutac package to %All namespace (which will be created if it does not exist).
+    
 
 
 
