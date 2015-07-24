@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2015.1 (Build 429U)" ts="2015-07-24 13:06:58">
-<Class name="cls.kutac.monitor.utils.Installer">
-<TimeChanged>63757,47200.76574</TimeChanged>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2015.1 (Build 429U)" ts="2015-07-24 16:07:29">
+<Class name="kutac.monitor.utils.Installer">
+<TimeChanged>63757,58028.937681</TimeChanged>
 <TimeCreated>63732,50627.865496</TimeCreated>
 
 <XData name="Install">
@@ -19,7 +19,7 @@
 <Database Name="${Namespace}" Dir="${MGRDIR}/${Namespace}" Create="yes" MountRequired="true" Resource="%DB_${Namespace}" PublicPermissions="RW" MountAtStartup="true"/>
 </Configuration>
 <Log Text="Creating web application /csp/${Namespace}" Level="0"/>
-<CSPApplication Url="/csp/${Namespace}" Directory="#{##class(%DeepSee.Report.UI.reportModelServer).GetCSPDirectory()}/${Namespace}" AuthenticationMethods="64" IsNamespaceDefault="true" />
+<CSPApplication Url='#{$ZCONVERT("/csp/${Namespace}", "L")}' Directory="#{##class(%DeepSee.Report.UI.reportModelServer).GetCSPDirectory()}/${Namespace}" AuthenticationMethods="64" IsNamespaceDefault="true" />
 <RunInstall Class="kutac.monitor.utils.Installer" Method="EnableDeepSee"/>
 </Namespace>
  <Log Text="End Creating namespace ${Namespace} and web application /csp/${Namespace}" Level="0"/>
@@ -88,7 +88,7 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 <FormalSpec>pVars,pLogLevel,tInstaller</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
-	do EnableDeepSee^%SYS.cspServer("/csp/"_pVars("Namespace")_"/")
+	do EnableDeepSee^%SYS.cspServer("/csp/"_$ZCONVERT(pVars("Namespace"), "L")_"/")
 	quit $$$OK
 ]]></Implementation>
 </Method>
