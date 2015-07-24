@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2015.1 (Build 429U)" ts="2015-07-24 13:04:17">
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2015.1 (Build 429U)" ts="2015-07-24 13:06:58">
 <Class name="cls.kutac.monitor.utils.Installer">
-<TimeChanged>63757,47038.203943</TimeChanged>
+<TimeChanged>63757,47200.76574</TimeChanged>
 <TimeCreated>63732,50627.865496</TimeCreated>
 
 <XData name="Install">
@@ -109,7 +109,7 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 
 <Method name="Update">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>Namespace=$Namespace,Owner:%String="intersystems-ru",Repository:%String="deepsee-sysmon-dashboards",Branch:%String,Username:%String="alexandrov-nikita",Password:%String="lolipops561azaza"</FormalSpec>
+<FormalSpec>Namespace=$Namespace,Owner:%String="intersystems-ru",Repository:%String="deepsee-sysmon-dashboards",Branch:%String,Username:%String,Password:%String</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	Set namespace = $Namespace
