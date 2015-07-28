@@ -58,7 +58,7 @@ After mapping kutac package to %All namespace, namespaces %SYS and {Namespace} w
 
 The next step is starting monitor. Your namespace will appear in the list of accessible namespaces for DeepSee and you can see different dashboards there. However, if you open User Portal in the DeepSee immediately after installing, you will notice that all dashboards will be empty. You need to wait a little time, because the installer runs the task for rebuilding cubes in 1 minute after installing. This task will run every 1.5 hours for updating information for monitor dashboards. Also, this task is available in the Task Manager, so you can run the task whenever you want.
 
-In case of absense of new facts and notes, please, restart system monitor using ^%SYSMONNGR utility. Run in Terminal:
+In case of absense of new facts and notes, please, restart System Monitor using ^%SYSMONNGR utility. Run in Terminal:
 
     zn "%SYS"
     do ^%SYSMONMGR
@@ -67,7 +67,7 @@ In case of absense of new facts and notes, please, restart system monitor using 
     1
     3
     
-After that, check "View System Monitor State": run "4" in the Terminal. All states must be OK. In another case, please, restart Caché.
+After that, check "View System Monitor State": run "4" in the Terminal. All states must be OK. In another case, please, restart Caché and start System Monitor.
         
 
 
