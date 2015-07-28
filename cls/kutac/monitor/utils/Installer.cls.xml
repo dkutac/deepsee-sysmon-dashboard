@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2015.1 (Build 429U)" ts="2015-07-28 15:22:47">
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2015.1 (Build 429U)" ts="2015-07-28 15:40:57">
 <Class name="kutac.monitor.utils.Installer">
-<TimeChanged>63761,55214.468859</TimeChanged>
+<TimeChanged>63761,56396.937793</TimeChanged>
 <TimeCreated>63732,50627.865496</TimeCreated>
 
 <XData name="Install">
@@ -109,7 +109,7 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 
 <Method name="Update">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>Namespace=$Namespace,Owner:%String="alexandrov-nikita",Repository:%String="deepsee-sysmon-dashboards",Branch:%String,Username:%String="alexandrov-nikita",Password:%String="lolipops561azaza"</FormalSpec>
+<FormalSpec>Namespace=$Namespace,Owner:%String="alexandrov-nikita",Repository:%String="deepsee-sysmon-dashboards",Branch:%String,Username:%String,Password:%String</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	Set namespace = $Namespace
@@ -293,21 +293,10 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 <ClassMethod>1</ClassMethod>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
-	set sc = ##class(%SYS.Monitor).Start()
-	if sc = 1 
-	{
-		write !, " System Monitor started"
-	} 
-	elseif sc = -1 
-	{
-		write !, " System Monitor already running!"
-	} 
-	else 
-	{
-		write !,"ERROR: "_$ZE
-		return sc
-	}
-	return $$$OK
+	s sc = ##class(%SYS.Monitor).Stop()
+	s sc1 = ##class(%SYS.Monitor).Start()
+	w !, "System Monitor has been restarted!", !
+	return sc1
 ]]></Implementation>
 </Method>
 
@@ -341,8 +330,6 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 	Return:$$$ISERR(st) st
 	Set id = task.%Id()
 	Return ##class(%SYS.Task).RunNow(id)
-	
-	// Do ##class(%DeepSee.Utils).%BuildCube("CacheGitHubCICube",1,0)
 ]]></Implementation>
 </Method>
 </Class>
