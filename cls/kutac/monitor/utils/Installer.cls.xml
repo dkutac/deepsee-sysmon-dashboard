@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2015.1 (Build 429U)" ts="2015-07-28 17:48:35">
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2015.1 (Build 429U)" ts="2015-07-28 19:41:02">
 <Class name="kutac.monitor.utils.Installer">
-<TimeChanged>63761,64094.09359</TimeChanged>
+<TimeChanged>63761,70845.703415</TimeChanged>
 <TimeCreated>63732,50627.865496</TimeCreated>
 
 <XData name="Install">
@@ -219,8 +219,6 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 <Implementation><![CDATA[
 	Set Namespace=tInstaller.Evaluate("${Namespace}")
 	Do tInstaller.PushNS("%SYS")
-	/*write !, "Configuring startup namespace"
-	set st1 = ..ConfiguringClasses(Namespace)*/
 	write !, "Activating Monitor Classes"
 	set st2 = ..ActivatingClasses()
 	write !, "Starting Monitor"
@@ -235,29 +233,6 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
     quit $$$OK
 ]]></Implementation>
 </Method>
-
-<UDLText name="T">
-<Content><![CDATA[
-/*ClassMethod ConfiguringClasses(Namespace = {$Namespace}) As %Status
-{
-	Set rsm = ##class(%SYS.Monitor).SetStartNS(Namespace)
-	if rsm'=1
-	{ 
-		write !, "Error setting Monitor namespaces: "_$ze,!
-		//quit $$$ISERR
-	}
-	
-	Set rsys = ##class(%SYS.Monitor).SetStartNS("%SYS")
-	if rsys'=1
-	{ 
-		write !, "Error setting Monitor namespaces: "_$ze,!
-		//quit $$$ISERR
-	}
-	//quit $$$OK
-	return $$$ADDSC(rsm, rsys)
-}*/
-]]></Content>
-</UDLText>
 
 <Method name="ActivatingClasses">
 <ClassMethod>1</ClassMethod>
