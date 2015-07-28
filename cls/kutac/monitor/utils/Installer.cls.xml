@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2015.1 (Build 429U)" ts="2015-07-28 16:32:00">
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2015.1 (Build 429U)" ts="2015-07-28 16:35:12">
 <Class name="kutac.monitor.utils.Installer">
-<TimeChanged>63761,59386.984137</TimeChanged>
+<TimeChanged>63761,59689.157</TimeChanged>
 <TimeCreated>63732,50627.865496</TimeCreated>
 
 <XData name="Install">
@@ -44,7 +44,7 @@
 
 <Log Text="Mapping kutac package to choosed namespace" Level="0"/>
 <Namespace Name="${Namespace}" Create="no">
-<ClassMapping From="${Namespace}" Package="kutac.*"/> 
+<ClassMapping From="${Namespace}" Package="kutac"/> 
 </Namespace>
 
 
