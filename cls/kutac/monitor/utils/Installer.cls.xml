@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2015.1 (Build 429U)" ts="2015-07-28 16:35:12">
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2015.1 (Build 429U)" ts="2015-07-28 17:48:35">
 <Class name="kutac.monitor.utils.Installer">
-<TimeChanged>63761,59689.157</TimeChanged>
+<TimeChanged>63761,64094.09359</TimeChanged>
 <TimeCreated>63732,50627.865496</TimeCreated>
 
 <XData name="Install">
@@ -100,7 +100,7 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 <Implementation><![CDATA[
     Set Namespace=tInstaller.Evaluate("${Namespace}")
     Do tInstaller.PushNS("%SYS")
-    Set tSC = ..Update(Namespace, "intersystems-ru", "deepsee-sysmon-dashboards", "master")
+    Set tSC = ..Update(Namespace, "alexandrov-nikita", "deepsee-sysmon-dashboards", "master")
     Do tInstaller.PopNS()
     If $$$ISERR(tSC) Throw ##class(%Installer.Exception).CreateFromStatus(tSC)
     quit $$$OK
@@ -109,7 +109,7 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 
 <Method name="Update">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>Namespace=$Namespace,Owner:%String="intersystems-ru",Repository:%String="deepsee-sysmon-dashboards",Branch:%String,Username:%String,Password:%String</FormalSpec>
+<FormalSpec>Namespace=$Namespace,Owner:%String="alexandrov-nikita",Repository:%String="deepsee-sysmon-dashboards",Branch:%String,Username:%String,Password:%String</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	Set namespace = $Namespace
@@ -219,8 +219,8 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 <Implementation><![CDATA[
 	Set Namespace=tInstaller.Evaluate("${Namespace}")
 	Do tInstaller.PushNS("%SYS")
-	write !, "Configuring startup namespace"
-	set st1 = ..ConfiguringClasses(Namespace)
+	/*write !, "Configuring startup namespace"
+	set st1 = ..ConfiguringClasses(Namespace)*/
 	write !, "Activating Monitor Classes"
 	set st2 = ..ActivatingClasses()
 	write !, "Starting Monitor"
@@ -230,17 +230,16 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 	Do tInstaller.PushNS(Namespace)
 	set st4 = ..CreateTask(Namespace)
 	Do tInstaller.PopNS()
-	set st = $$$ADDSC(st4, $$$ADDSC(st1, $$$ADDSC(st2, st3)))
+	set st = $$$ADDSC(st4, $$$ADDSC(st2, st3))
 	if $$$ISERR(st) Throw ##class(%Installer.Exception).CreateFromStatus(st)
     quit $$$OK
 ]]></Implementation>
 </Method>
 
-<Method name="ConfiguringClasses">
-<ClassMethod>1</ClassMethod>
-<FormalSpec>Namespace=$Namespace</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
+<UDLText name="T">
+<Content><![CDATA[
+/*ClassMethod ConfiguringClasses(Namespace = {$Namespace}) As %Status
+{
 	Set rsm = ##class(%SYS.Monitor).SetStartNS(Namespace)
 	if rsm'=1
 	{ 
@@ -256,8 +255,9 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 	}
 	//quit $$$OK
 	return $$$ADDSC(rsm, rsys)
-]]></Implementation>
-</Method>
+}*/
+]]></Content>
+</UDLText>
 
 <Method name="ActivatingClasses">
 <ClassMethod>1</ClassMethod>
