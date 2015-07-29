@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2015.1 (Build 429U)" ts="2015-07-28 15:23:21">
+<Class name="kutac.monitor.utils.Task">
+<Description>
+Simple update task. Use CacheGitHubCI.Hook if you need more functionality.</Description>
+<Super>%SYS.Task.Definition</Super>
+<TimeChanged>63761,55062.906473</TimeChanged>
+<TimeCreated>63761,54770.687029</TimeCreated>
+
+<Parameter name="TaskName">
+<Default>CubesBuildTask</Default>
+</Parameter>
+
+<Property name="Namespace">
+<Description>
+Namespace, where to download and compile repository</Description>
+<Type>%String</Type>
+<InitialExpression>$Namespace</InitialExpression>
+</Property>
+
+<Method name="OnTask">
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	do ##class(%DeepSee.Utils).%BuildCube("HistoryPerfData")
+	do ##class(%DeepSee.Utils).%BuildCube("CurrentSysDataDB")
+	do ##class(%DeepSee.Utils).%BuildCube("HistoryPerfDataWD")
+	do ##class(%DeepSee.Utils).%BuildCube("HistorySysData")
+	do ##class(%DeepSee.Utils).%BuildCube("HistorySysDataDB")
+	q $$$OK
+]]></Implementation>
+</Method>
+</Class>
+</Export>

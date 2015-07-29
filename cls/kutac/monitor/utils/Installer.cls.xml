@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2015.1 (Build 429U)" ts="2015-07-24 16:07:29">
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2015.1 (Build 429U)" ts="2015-07-28 19:41:02">
 <Class name="kutac.monitor.utils.Installer">
-<TimeChanged>63757,58028.937681</TimeChanged>
+<TimeChanged>63761,70845.703415</TimeChanged>
 <TimeCreated>63732,50627.865496</TimeCreated>
 
 <XData name="Install">
@@ -19,7 +19,7 @@
 <Database Name="${Namespace}" Dir="${MGRDIR}/${Namespace}" Create="yes" MountRequired="true" Resource="%DB_${Namespace}" PublicPermissions="RW" MountAtStartup="true"/>
 </Configuration>
 <Log Text="Creating web application /csp/${Namespace}" Level="0"/>
-<CSPApplication Url='#{$ZCONVERT("/csp/${Namespace}", "L")}' Directory="#{##class(%DeepSee.Report.UI.reportModelServer).GetCSPDirectory()}/${Namespace}" AuthenticationMethods="64" IsNamespaceDefault="true" />
+<CSPApplication Url='#{$ZCONVERT("/csp/${Namespace}", "L")}' Directory='#{##class(%DeepSee.Report.UI.reportModelServer).GetCSPDirectory()_$ZCONVERT("${Namespace}", "L")}' AuthenticationMethods="64" IsNamespaceDefault="true" />
 <RunInstall Class="kutac.monitor.utils.Installer" Method="EnableDeepSee"/>
 </Namespace>
  <Log Text="End Creating namespace ${Namespace} and web application /csp/${Namespace}" Level="0"/>
@@ -100,7 +100,7 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 <Implementation><![CDATA[
     Set Namespace=tInstaller.Evaluate("${Namespace}")
     Do tInstaller.PushNS("%SYS")
-    Set tSC = ..Update(Namespace, "intersystems-ru", "deepsee-sysmon-dashboards", "master")
+    Set tSC = ..Update(Namespace, "alexandrov-nikita", "deepsee-sysmon-dashboards", "master")
     Do tInstaller.PopNS()
     If $$$ISERR(tSC) Throw ##class(%Installer.Exception).CreateFromStatus(tSC)
     quit $$$OK
@@ -109,7 +109,7 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 
 <Method name="Update">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>Namespace=$Namespace,Owner:%String="intersystems-ru",Repository:%String="deepsee-sysmon-dashboards",Branch:%String,Username:%String,Password:%String</FormalSpec>
+<FormalSpec>Namespace=$Namespace,Owner:%String="alexandrov-nikita",Repository:%String="deepsee-sysmon-dashboards",Branch:%String,Username:%String,Password:%String</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	Set namespace = $Namespace
@@ -219,8 +219,6 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 <Implementation><![CDATA[
 	Set Namespace=tInstaller.Evaluate("${Namespace}")
 	Do tInstaller.PushNS("%SYS")
-	write !, "Configuring startup namespace"
-	set st1 = ..ConfiguringClasses(Namespace)
 	write !, "Activating Monitor Classes"
 	set st2 = ..ActivatingClasses()
 	write !, "Starting Monitor"
@@ -228,34 +226,11 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 	write !, "Creating Task"
 	Do tInstaller.PopNS()
 	Do tInstaller.PushNS(Namespace)
-	set st4 = ..CreateTask()
+	set st4 = ..CreateTask(Namespace)
 	Do tInstaller.PopNS()
-	set st = $$$ADDSC(st4, $$$ADDSC(st1, $$$ADDSC(st2, st3)))
+	set st = $$$ADDSC(st4, $$$ADDSC(st2, st3))
 	if $$$ISERR(st) Throw ##class(%Installer.Exception).CreateFromStatus(st)
     quit $$$OK
-]]></Implementation>
-</Method>
-
-<Method name="ConfiguringClasses">
-<ClassMethod>1</ClassMethod>
-<FormalSpec>Namespace=$Namespace</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
-	Set rsm = ##class(%SYS.Monitor).SetStartNS(Namespace)
-	if rsm'=1
-	{ 
-		write !, "Error setting Monitor namespaces: "_$ze,!
-		//quit $$$ISERR
-	}
-	
-	Set rsys = ##class(%SYS.Monitor).SetStartNS("%SYS")
-	if rsys'=1
-	{ 
-		write !, "Error setting Monitor namespaces: "_$ze,!
-		//quit $$$ISERR
-	}
-	//quit $$$OK
-	return $$$ADDSC(rsm, rsys)
 ]]></Implementation>
 </Method>
 
@@ -293,31 +268,43 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 <ClassMethod>1</ClassMethod>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
-	set sc = ##class(%SYS.Monitor).Start()
-	if sc = 1 
-	{
-		write !, " System Monitor started"
-	} 
-	elseif sc = -1 
-	{
-		write !, " System Monitor already running!"
-	} 
-	else 
-	{
-		write !,"ERROR: "_$ZE
-		return sc
-	}
-	return $$$OK
+	s sc = ##class(%SYS.Monitor).Stop()
+	s sc1 = ##class(%SYS.Monitor).Start()
+	w !, "System Monitor has been restarted!", !
+	return sc1
 ]]></Implementation>
 </Method>
 
 <Method name="CreateTask">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>hrs:%Integer=3</FormalSpec>
+<FormalSpec>Namespace=$Namespace,min:%Integer=90</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	
-	q ##class(%DeepSee.CubeManager.Task.Synch).Schedule(0, 1, 1, hrs, ($p($H, ",", 2) + 60) # 10800, 0)
+	//q ##class(%DeepSee.CubeManager.Task.Synch).Schedule(0, 1, 1, hrs, ($p($H, ",", 2) + 60) # 10800, 0)
+	//q ##class(%DeepSee.CubeManager.Task.Build).Schedule(0, 0, 1, "", ($p($H, ",", 2) + 10))
+	Set task=##class(%SYS.Task).%New()
+	Set task.Name = "Build cubes in "_Namespace
+	Set task.NameSpace= Namespace
+	Set task.TimePeriod=0 // Daily
+	Set task.TimePeriodEvery=1 // Every 1 day
+	Set task.DailyFrequency=1 // Run Several times in a day
+	Set task.DailyFrequencyTime=0 // Run every x minutes
+	Set task.DailyIncrement=min // # of minutes between runs
+	Set task.DailyStartTime = 0 // Start at 00:00:00
+	Set task.DailyEndTime = 86399 // End at 23:59:59
+	Set task.StartDate = $p($H,",",1) // Start today
+	
+	
+	Set taskdef = ##class(kutac.monitor.utils.Task).%New()
+	Set taskdef.Namespace = Namespace
+	Do task.AssignSettings(taskdef)
+	Set task.TaskClass=$classname(taskdef)
+	
+	Set st = task.%Save()
+	Return:$$$ISERR(st) st
+	Set id = task.%Id()
+	Return ##class(%SYS.Task).RunNow(id)
 ]]></Implementation>
 </Method>
 </Class>
