@@ -45,7 +45,7 @@ On this step installer would create (if needed) Namespace and corresponding data
 Default Settings
 ----------------
 
-The installer activates in the namespace %SYS" following monitor classes:
+The installer activates in the namespace "%SYS" following monitor classes:
 
 * %Monitor.System.HistoryPerf
 * %Monitor.System.Diskspace
@@ -62,12 +62,10 @@ In case of absense of new facts and notes, please, restart System Monitor using 
 
     zn "%SYS"
     do ^%SYSMONMGR
-    1
-    2
-    1
-    3
     
-After that, check "View System Monitor State": run "4" in the Terminal. All states must be OK. In another case, please, restart Caché and start System Monitor.
+Restart your monitor using option "Start/Stop System Monitor".
+    
+After that, check status using option "View System Monitor State". All states must be OK. In another case, please, restart Caché and start System Monitor.
         
 
 
