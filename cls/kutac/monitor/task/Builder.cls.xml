@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25">
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2015.1 (Build 429U)" ts="2015-08-10 15:45:00">
 <Class name="kutac.monitor.task.Builder">
 <Super>%SYS.Task.Definition</Super>
+<TimeChanged>63774,56446.562698</TimeChanged>
 <TimeCreated>63544,45910.609546</TimeCreated>
 
 <Method name="OnTask">
@@ -46,7 +47,7 @@ d ##class(kutac.monitor.task.Builder).Setup()</Description>
 			set tTask.Name="Rebuild SYSMON Cubes"
 			set tTask.DailyFrequency=1
 			set tTask.DailyFrequencyTime=0
-			set tTask.DailyIncrement=15		// run every 15 minutes
+			set tTask.DailyIncrement=60		// run every 15 minutes
 			set tTask.DailyStartTime=28800	// 8AM
 			set tTask.DailyEndTime=64800	// 6PM
 			set tTask.StartDate=+$h+1
