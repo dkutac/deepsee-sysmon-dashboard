@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2015.1 (Build 429U)" ts="2015-08-10 15:49:47">
+<Export generator="Cache" version="25">
 <Class name="kutac.monitor.utils.Installer">
-<TimeChanged>63774,56462.968571</TimeChanged>
 <TimeCreated>63732,50627.865496</TimeCreated>
 
 <XData name="Install">
@@ -12,18 +11,35 @@
 <Var Name="Namespace" Value="SYSMON"/>
 <Log Text="Set namespace to ${Namespace}" Level="0"/>
 </IfNotDef>
+
+
 <If Condition='(##class(Config.Namespaces).Exists("${Namespace}")=0)'>
 <Log Text="Creating namespace ${Namespace}" Level="0"/>
-<Namespace Name="${Namespace}" Create="yes" Code="CACHESYS" Ensemble="" Data="CACHESYS">
+
+<Namespace Name="${Namespace}" Create="yes" Code="${Namespace}" Ensemble="" Data="${Namespace}">
+<Log Text="Creating database ${Namespace}" Level="0"/>
+
 <Configuration>
 <Database Name="${Namespace}" Dir="${MGRDIR}/${Namespace}" Create="yes" MountRequired="true" Resource="%DB_${Namespace}" PublicPermissions="RW" MountAtStartup="true"/>
 </Configuration>
-<Log Text="Creating web application /csp/${Namespace}" Level="0"/>
-<CSPApplication Url='#{$ZCONVERT("/csp/${Namespace}", "L")}' Directory='#{##class(%DeepSee.Report.UI.reportModelServer).GetCSPDirectory()_$ZCONVERT("${Namespace}", "L")}' AuthenticationMethods="64" IsNamespaceDefault="true" />
-<RunInstall Class="kutac.monitor.utils.Installer" Method="EnableDeepSee"/>
+
+<Log Text="End creating database ${Namespace}" Level="0"/>
 </Namespace>
- <Log Text="End Creating namespace ${Namespace} and web application /csp/${Namespace}" Level="0"/>
+
+
+ <Log Text="End creating namespace ${Namespace}" Level="0"/>
+ 
+ 
+ <Namespace Name="${Namespace}" Create="no">
+<Log Text="Creating web application /csp/${Namespace}" Level="0"/>
+
+<CSPApplication Url='#{$ZCONVERT("/csp/${Namespace}", "L")}' Directory='#{##class(%DeepSee.Report.UI.reportModelServer).GetCSPDirectory()_$ZCONVERT("${Namespace}", "L")}' AuthenticationMethods="64" IsNamespaceDefault="true" Recurse="true"/>
+<RunInstall Class="kutac.monitor.utils.Installer" Method="EnableDeepSee"/>
+
+<Log Text="End creating web application /csp/${Namespace}" Level="0"/>
+</Namespace>
 </If>
+
 
 <Namespace Name="${Namespace}" Create="no">
 <IfDef Var="SourceDir">
@@ -35,16 +51,27 @@
 <Log Text="SourceDir undefined - online install from GitHub" Level="0"/>
 <RunInstall Class="kutac.monitor.utils.Installer" Method="DownloadFromGitHub"/>
 </IfNotDef>
-
-
-
 </Namespace>
 
 
+<Namespace Name="${Namespace}" Create="no" Code="${Namespace}" Data="${Namespace}" Ensemble="">
+<Log Text="Mapping SYS.History package to choosed namespace." Level="0"/>
 
-<Log Text="Mapping kutac package to choosed namespace" Level="0"/>
-<Namespace Name="${Namespace}" Create="no">
-<ClassMapping From="${Namespace}" Package="kutac"/> 
+<Configuration>
+<ClassMapping From="CACHESYS" Package="SYS.History"/>
+</Configuration>
+
+<Log Text="Mapping SYS.History global to choosed namespace." Level="0"/>
+
+<Configuration>
+<GlobalMapping From="CACHESYS" Global="SYS.History"/>
+</Configuration>
+
+<Log Text="Mapping MONEXT routine to choosed namespace." Level="0"/>
+
+<Configuration>
+<RoutineMapping From="CACHESYS" Routines="MONEXT"/>
+</Configuration>
 </Namespace>
 
 
@@ -88,7 +115,8 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 <FormalSpec>pVars,pLogLevel,tInstaller</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
-	do EnableDeepSee^%SYS.cspServer("/csp/"_$ZCONVERT(pVars("Namespace"), "L")_"/")
+	set namespace = tInstaller.Evaluate("${Namespace}")
+	do EnableDeepSee^%SYS.cspServer("/csp/"_$ZCONVERT(namespace, "L")_"/")
 	quit $$$OK
 ]]></Implementation>
 </Method>
@@ -225,9 +253,12 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 	set st3 = ..RunningMonitor()
 	write !, "Creating Task"
 	Do tInstaller.PopNS()
-	Do tInstaller.PushNS(Namespace)
-	do ##class(kutac.monitor.task.Builder).Setup()
-	Do tInstaller.PopNS()
+	if 'tInstaller.Evaluate("${SourceDir}")
+	{
+		Do tInstaller.PushNS(Namespace)
+		Do ##class(kutac.monitor.task.Builder).Setup()
+		Do tInstaller.PopNS()
+	}
 	set st = $$$ADDSC(st2, st3)
 	if $$$ISERR(st) Throw ##class(%Installer.Exception).CreateFromStatus(st)
     quit $$$OK
