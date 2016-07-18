@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2015.1 (Build 429U)" ts="2015-08-10 15:45:00">
+<Export generator="Cache" version="25">
 <Class name="kutac.monitor.task.Builder">
 <Super>%SYS.Task.Definition</Super>
-<TimeChanged>63774,56446.562698</TimeChanged>
 <TimeCreated>63544,45910.609546</TimeCreated>
 
 <Method name="OnTask">
@@ -55,6 +54,11 @@ d ##class(kutac.monitor.task.Builder).Setup()</Description>
 			set tTask.NameSpace=$namespace
 			set tTask.TaskClass="kutac.monitor.task.Builder"
 			$$$THROWONERROR(tSC,tTask.%Save())
+			if $$$ISOK(tSC)
+			{
+				do ##class(%SYS.Task).Resume(tTask.%Id())
+				do ##class(%SYS.Task).RunNow(tTask.%Id())
+			}
 		} catch (ex) {
 			w !,ex.DisplayString()
 		}
