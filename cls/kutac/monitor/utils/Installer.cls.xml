@@ -44,7 +44,7 @@
 <Namespace Name="${Namespace}" Create="no">
 <IfDef Var="SourceDir">
 <Log Text="SourceDir defined - offline install from ${SourceDir}" Level="0"/>
-<Import File="${SourceDir}"/>
+<RunInstall Class="kutac.monitor.utils.Installer" Method="OfflineInstall"/>
 </IfDef>
 
 <IfNotDef Var="SourceDir">
@@ -253,12 +253,9 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 	set st3 = ..RunningMonitor()
 	write !, "Creating Task"
 	Do tInstaller.PopNS()
-	if 'tInstaller.Evaluate("${SourceDir}")
-	{
-		Do tInstaller.PushNS(Namespace)
-		Do ##class(kutac.monitor.task.Builder).Setup()
-		Do tInstaller.PopNS()
-	}
+	Do tInstaller.PushNS(Namespace)
+	Do ##class(kutac.monitor.task.Builder).Setup()
+	Do tInstaller.PopNS()
 	set st = $$$ADDSC(st2, st3)
 	if $$$ISERR(st) Throw ##class(%Installer.Exception).CreateFromStatus(st)
     quit $$$OK
@@ -303,6 +300,22 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 	s sc1 = ##class(%SYS.Monitor).Start()
 	w !, "System Monitor has been restarted!", !
 	return sc1
+]]></Implementation>
+</Method>
+
+<Method name="OfflineInstall">
+<ClassMethod>1</ClassMethod>
+<FormalSpec><![CDATA[&pVars,pLogLevel:%Integer=0,tInstaller:%Installer.Installer]]></FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	set ns = $Namespace
+	set namespace = tInstaller.Evaluate("${Namespace}")
+	
+	zn namespace
+	do $system.OBJ.ImportDir(tInstaller.Evaluate("${SourceDir}"),"*.xml","ck",.st,1)
+	
+	zn ns
+	quit $$$OK
 ]]></Implementation>
 </Method>
 </Class>
