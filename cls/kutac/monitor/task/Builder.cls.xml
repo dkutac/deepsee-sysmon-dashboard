@@ -49,16 +49,16 @@ d ##class(kutac.monitor.task.Builder).Setup()</Description>
 			set tTask.DailyIncrement=60		// run every 15 minutes
 			set tTask.DailyStartTime=28800	// 8AM
 			set tTask.DailyEndTime=64800	// 6PM
-			set tTask.StartDate=+$h+1
+			if ($p($h,",",2) >= 64800)
+				set tTask.StartDate=+$h+1
+			else
+				set tTask.StartDate=+$h
 			set tTask.Description="Rebuild System Monitor Cubes"
 			set tTask.NameSpace=$namespace
 			set tTask.TaskClass="kutac.monitor.task.Builder"
 			$$$THROWONERROR(tSC,tTask.%Save())
-			if $$$ISOK(tSC)
-			{
-				do ##class(%SYS.Task).Resume(tTask.%Id())
-				do ##class(%SYS.Task).RunNow(tTask.%Id())
-			}
+			do ##class(%SYS.Task).Resume(tTask.%Id())
+			do ##class(%SYS.Task).RunNow(tTask.%Id())
 		} catch (ex) {
 			w !,ex.DisplayString()
 		}
