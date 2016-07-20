@@ -26,11 +26,12 @@
 <Log Text="End creating database ${Namespace}" Level="0"/>
 </Namespace>
 
-
  <Log Text="End creating namespace ${Namespace}" Level="0"/>
- 
- 
- <Namespace Name="${Namespace}" Create="no">
+</If>
+
+
+<If Condition='(##class(Security.Applications).Exists($ZCONVERT("/csp/${Namespace}", "L"))=0)'>
+<Namespace Name="${Namespace}" Create="no">
 <Log Text="Creating web application /csp/${Namespace}" Level="0"/>
 
 <CSPApplication Url='#{$ZCONVERT("/csp/${Namespace}", "L")}' Directory='#{##class(%DeepSee.Report.UI.reportModelServer).GetCSPDirectory()_$ZCONVERT("${Namespace}", "L")}' AuthenticationMethods="64" IsNamespaceDefault="true" Recurse="true"/>
@@ -249,12 +250,16 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 	Do tInstaller.PushNS("%SYS")
 	write !, "Activating Monitor Classes"
 	set st2 = ..ActivatingClasses()
-	write !, "Starting Monitor"
+	write !, "Starting Monitor", !
 	set st3 = ..RunningMonitor()
-	write !, "Creating Task"
 	Do tInstaller.PopNS()
 	Do tInstaller.PushNS(Namespace)
-	Do ##class(kutac.monitor.task.Builder).Setup()
+	&sql(select Name from %SYS.Task where Name = 'Rebuild SYSMON Cubes')
+	if +SQLCODE 
+	{
+		write "Creating Task",!
+		Do ##class(kutac.monitor.task.Builder).Setup()
+	}
 	Do tInstaller.PopNS()
 	set st = $$$ADDSC(st2, st3)
 	if $$$ISERR(st) Throw ##class(%Installer.Exception).CreateFromStatus(st)
@@ -298,7 +303,7 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 <Implementation><![CDATA[
 	s sc = ##class(%SYS.Monitor).Stop()
 	s sc1 = ##class(%SYS.Monitor).Start()
-	w !, "System Monitor has been restarted!", !
+	w "System Monitor has been restarted!", !
 	return sc1
 ]]></Implementation>
 </Method>
