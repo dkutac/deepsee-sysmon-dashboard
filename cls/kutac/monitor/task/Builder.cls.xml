@@ -39,8 +39,6 @@ In order to execute a real task, override this method in a subclass.]]></Descrip
 d ##class(kutac.monitor.task.Builder).Setup()</Description>
 <ClassMethod>1</ClassMethod>
 <Implementation><![CDATA[
-	&sql(select Name from %SYS.Task where Name = 'Rebuild SYSMON Cubes')
-	if +SQLCODE {
 		try {
 			set tTask=##class(%SYS.Task).%New()
 			set tTask.Name="Rebuild SYSMON Cubes"
@@ -62,7 +60,6 @@ d ##class(kutac.monitor.task.Builder).Setup()</Description>
 		} catch (ex) {
 			w !,ex.DisplayString()
 		}
-	}
 	quit
 ]]></Implementation>
 </Method>
