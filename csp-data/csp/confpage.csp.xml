@@ -12,21 +12,26 @@
 function classChk(checked, class_name)
 {
 	checked = Number(checked);
-	#call(..WriteClassChanges(checked,class_name))#
+	#call(..WriteClassChanges(checked,class_name))#;
 }
 
 function submitAll()
 {
-	#server(..SaveAll())#
+	#server(..SaveAll())#;
 }
 
 function stopMon()
 {
-	#server(..StopMonitor())#
+	#server(..StopMonitor())#;
 }
 function startMon()
 {
-	#server(..StartMonitor())#
+	#server(..StartMonitor())#;
+}
+function docLoc(page)
+{
+	var newloc = 'http://' + window.location.host + '/csp/documatic/%25CSP.Documatic.cls?PAGE=CLASS&LIBRARY=%25SYS&CLASSNAME=%25' + page;
+	window.open(newloc,"_blank","");
 }
 </script>
 
@@ -102,7 +107,8 @@ d Rset.Execute()
 		if Rset.GetData(2) {set chkd = "checked"}
 		else {set chkd = ""}
 	</script>
-	<input type="checkbox" name="#(i)#" value="#(Rset.GetData(1))#" #(chkd)# onclick="classChk(this.checked, this.value)">#(Rset.GetData(1))#</br>
+	<input type="checkbox" name="#(i)#" value="#(Rset.GetData(1))#" #(chkd)# onclick="classChk(this.checked, this.value)">
+	<a name="#(i)#" href = "##(i)#" onClick="docLoc('#($p(Rset.GetData(1),"%",2))#'); return false;">#(Rset.GetData(1))#</a></br>
 </csp:while>
 <input type="button" value="Apply" onclick="submitAll();"/>
 </form>
