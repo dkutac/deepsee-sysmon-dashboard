@@ -8,17 +8,10 @@
 
 <script language="cache" runat="server">
 znspace "%SYS"
-<<<<<<< HEAD
 kill ^SYSMONClassTemp
 Set Rset = ##class(%Library.ResultSet).%New("%Monitor.ItemGroup:Classes")
 s Rset.RuntimeMode=1
 d Rset.Execute()
-=======
-Set Rset = ##class(%Library.ResultSet).%New("%Monitor.ItemGroup:Classes")
-s Rset.RuntimeMode=1
-d Rset.Execute()
-kill ^SYSMONClass
->>>>>>> 49fcae963ae9daf98d6ae0003a8f2e3383ff3077
 </script>
 </head>
 
@@ -33,10 +26,18 @@ function submitAll()
 {
 	#server(..SaveAll())#
 }
+
+function stopMon()
+{
+	#server(..StopMonitor())#
+}
+function startMon()
+{
+	#server(..StartMonitor())#
+}
 </script>
 
 <csp:method name = "WriteClassChanges" Arguments="a:%Integer,b:%String">
-<<<<<<< HEAD
 set ^SYSMONClassTemp(b) = a
 </csp:method>
 
@@ -48,41 +49,47 @@ if $data(^SYSMONClassTemp)
 	{
 		set value = ^SYSMONClassTemp(key) 
 		set namespace = $Namespace
-=======
-set ^SYSMONClass(b) = a
-</csp:method>
-
-<csp:method name = "SaveAll">
-if $data(^SYSMONClass)
-{
-	set key = $order(^SYSMONClass(""))
-	while (key '= "")
-	{
-		set value = ^SYSMONClass(key) 
->>>>>>> 49fcae963ae9daf98d6ae0003a8f2e3383ff3077
 		zn "%SYS"
 		do ##class(%Monitor.ItemGroup).MetricsClassItemGroup(key,.id)
 	 	set class=##class(%Monitor.ItemGroup).%OpenId(id)
 	 	set class.Activated = value
 	 	do class.%Save()
-<<<<<<< HEAD
 	 	zn namespace
 	 	set key = $order(^SYSMONClassTemp(key))
 	}
 	kill ^SYSMONClassTemp
-=======
-	 	zn "SYSMON"
-	 	set key = $order(^SYSMONClass(key))
-	}
-	kill ^SYSMONClass
->>>>>>> 49fcae963ae9daf98d6ae0003a8f2e3383ff3077
 	&js<alert("Settings changed")>
 	&js<location.reload()>
 	
 }
 </csp:method>
 
+<csp:method name = "StopMonitor">
+zn "%SYS"
+set sc = ##class(%SYS.Monitor).Stop()
+if sc=1 {
+	&js< alert(" System Monitor stopped")>
+} elseif sc=-1 {
+	&js< alert(" System Monitor not running!")>
+} else {
+	 &js< alert("ERROR: "+#($ZE)#)>
+}
+</csp:method>
+
+<csp:method name = "StartMonitor">
+zn "%SYS"
+set sc = ##class(%SYS.Monitor).Start()
+if sc=1 {
+	&js< alert("System Monitor started")>
+} elseif sc =-1 {
+	&js< alert("System Monitor already running!")>
+} else {
+	&js< alert("ERROR: "+#($ZE)#)>
+}
+</csp:method>
+
 <body>
+<b>Sysmon Applicatin Classes configuration:</b><br/>
 <form name="configform">
 <csp:while condition="Rset.Next()" counter="i">
 	<script language="cache" runat="server">
@@ -92,6 +99,14 @@ if $data(^SYSMONClass)
 	<input type="checkbox" name="#(i)#" value="#(Rset.GetData(1))#" #(chkd)# onclick="classChk(this.checked, this.value)">#(Rset.GetData(1))#</br>
 </csp:while>
 <input type="button" value="Apply" onclick="submitAll();"/>
+</form>
+
+<br/><br/>
+
+<b>Control System Monitor:</b><br/>
+<form name="stspform">
+<input type="button" value="Start SYSMON" onclick="startMon();"/>
+<input type="button" value="Stop SYSMON" onclick="stopMon();"/>
 </form>
 </body>
 </html>

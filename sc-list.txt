@@ -1,4 +1,5 @@
 <cspapp>/confpage.csp
+<cspapp>/contolpage.csp
 kutac.monitor.cubes.CurrentSysDataDB.cls
 kutac.monitor.cubes.HistoryPerfData.cls
 kutac.monitor.cubes.HistoryPerfDataWD.cls
