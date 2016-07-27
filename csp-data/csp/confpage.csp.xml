@@ -8,10 +8,17 @@
 
 <script language="cache" runat="server">
 znspace "%SYS"
+<<<<<<< HEAD
 kill ^SYSMONClassTemp
 Set Rset = ##class(%Library.ResultSet).%New("%Monitor.ItemGroup:Classes")
 s Rset.RuntimeMode=1
 d Rset.Execute()
+=======
+Set Rset = ##class(%Library.ResultSet).%New("%Monitor.ItemGroup:Classes")
+s Rset.RuntimeMode=1
+d Rset.Execute()
+kill ^SYSMONClass
+>>>>>>> 49fcae963ae9daf98d6ae0003a8f2e3383ff3077
 </script>
 </head>
 
@@ -29,6 +36,7 @@ function submitAll()
 </script>
 
 <csp:method name = "WriteClassChanges" Arguments="a:%Integer,b:%String">
+<<<<<<< HEAD
 set ^SYSMONClassTemp(b) = a
 </csp:method>
 
@@ -40,15 +48,34 @@ if $data(^SYSMONClassTemp)
 	{
 		set value = ^SYSMONClassTemp(key) 
 		set namespace = $Namespace
+=======
+set ^SYSMONClass(b) = a
+</csp:method>
+
+<csp:method name = "SaveAll">
+if $data(^SYSMONClass)
+{
+	set key = $order(^SYSMONClass(""))
+	while (key '= "")
+	{
+		set value = ^SYSMONClass(key) 
+>>>>>>> 49fcae963ae9daf98d6ae0003a8f2e3383ff3077
 		zn "%SYS"
 		do ##class(%Monitor.ItemGroup).MetricsClassItemGroup(key,.id)
 	 	set class=##class(%Monitor.ItemGroup).%OpenId(id)
 	 	set class.Activated = value
 	 	do class.%Save()
+<<<<<<< HEAD
 	 	zn namespace
 	 	set key = $order(^SYSMONClassTemp(key))
 	}
 	kill ^SYSMONClassTemp
+=======
+	 	zn "SYSMON"
+	 	set key = $order(^SYSMONClass(key))
+	}
+	kill ^SYSMONClass
+>>>>>>> 49fcae963ae9daf98d6ae0003a8f2e3383ff3077
 	&js<alert("Settings changed")>
 	&js<location.reload()>
 	
