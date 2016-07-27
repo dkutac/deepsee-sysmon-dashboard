@@ -44,7 +44,7 @@ d ##class(kutac.monitor.task.Builder).Setup()</Description>
 			set tTask.Name="Rebuild SYSMON Cubes"
 			set tTask.DailyFrequency=1
 			set tTask.DailyFrequencyTime=0
-			set tTask.DailyIncrement=60		// run every 15 minutes
+			set tTask.DailyIncrement=35		// run every 15 minutes
 			set tTask.DailyStartTime=28800	// 8AM
 			set tTask.DailyEndTime=64800	// 6PM
 			if ($p($h,",",2) >= 64800)
