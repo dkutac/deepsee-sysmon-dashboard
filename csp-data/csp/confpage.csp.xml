@@ -6,13 +6,6 @@
 
 <title>SYSMON Configure page</title>
 
-<script language="cache" runat="server">
-znspace "%SYS"
-kill ^SYSMONClassTemp
-Set Rset = ##class(%Library.ResultSet).%New("%Monitor.ItemGroup:Classes")
-s Rset.RuntimeMode=1
-d Rset.Execute()
-</script>
 </head>
 
 <script language="javascript">
@@ -38,23 +31,24 @@ function startMon()
 </script>
 
 <csp:method name = "WriteClassChanges" Arguments="a:%Integer,b:%String">
+new $namespace
+set $namespace = "%SYS"
 set ^SYSMONClassTemp(b) = a
 </csp:method>
 
 <csp:method name = "SaveAll">
+new $namespace
+set $namespace = "%SYS"
 if $data(^SYSMONClassTemp)
 {
 	set key = $order(^SYSMONClassTemp(""))
 	while (key '= "")
 	{
 		set value = ^SYSMONClassTemp(key) 
-		set namespace = $Namespace
-		zn "%SYS"
 		do ##class(%Monitor.ItemGroup).MetricsClassItemGroup(key,.id)
 	 	set class=##class(%Monitor.ItemGroup).%OpenId(id)
 	 	set class.Activated = value
 	 	do class.%Save()
-	 	zn namespace
 	 	set key = $order(^SYSMONClassTemp(key))
 	}
 	kill ^SYSMONClassTemp
@@ -65,7 +59,8 @@ if $data(^SYSMONClassTemp)
 </csp:method>
 
 <csp:method name = "StopMonitor">
-zn "%SYS"
+new $namespace
+set $namespace = "%SYS"
 set sc = ##class(%SYS.Monitor).Stop()
 if sc=1 {
 	&js< alert(" System Monitor stopped")>
@@ -77,7 +72,8 @@ if sc=1 {
 </csp:method>
 
 <csp:method name = "StartMonitor">
-zn "%SYS"
+new $namespace
+set $namespace = "%SYS"
 set sc = ##class(%SYS.Monitor).Start()
 if sc=1 {
 	&js< alert("System Monitor started")>
@@ -89,6 +85,16 @@ if sc=1 {
 </csp:method>
 
 <body>
+
+<script language="cache" runat="server">
+new $namespace
+set $namespace = "%SYS"
+kill ^SYSMONClassTemp
+Set Rset = ##class(%Library.ResultSet).%New("%Monitor.ItemGroup:Classes")
+s Rset.RuntimeMode=1
+d Rset.Execute()
+</script>
+
 <b>Sysmon Applicatin Classes configuration:</b><br/>
 <form name="configform">
 <csp:while condition="Rset.Next()" counter="i">
