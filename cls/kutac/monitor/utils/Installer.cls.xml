@@ -76,7 +76,7 @@
 </Namespace>
 
 <If Condition='(##class(Config.Namespaces).Exists("${Namespace}")=0)'>
-<Log Text="Setup DSW settings."/>
+<Log Text="Setup DSW settings." Level="0"/>
 <RunInstall Class="kutac.monitor.utils.Installer" Method="SetDSWSettings"/>
 </If>
 
