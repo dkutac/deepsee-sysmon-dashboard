@@ -75,7 +75,7 @@
 </Configuration>
 </Namespace>
 
-<If Condition='(##class(Config.Namespaces).Exists("${Namespace}")=0)'>
+<If Condition='##class(Config.Namespaces).Exists("MDX2JSON")'>
 <Log Text="Setup DSW settings." Level="0"/>
 <RunInstall Class="kutac.monitor.utils.Installer" Method="SetDSWSettings"/>
 </If>
@@ -338,7 +338,7 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 	set xdata = ##class(%Dictionary.CompiledXData).%OpenId(id)
 	
 	set settings = xdata.Data.Read()
-	if (##class(%Dictionary.CompiledClass).%ExistsId("MDX2JSON.Users||SetConfig")=0)
+	if (##class(%Dictionary.CompiledMethod).%ExistsId("MDX2JSON.Users||SetConfig"))
 	{
 		do ##class(MDX2JSON.Users).SetConfig(tInstaller.Evaluate("${Namespace}"),settings,"DeepSeeWeb")
 	}
