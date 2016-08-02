@@ -340,7 +340,7 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 	set settings = xdata.Data.Read()
 	if (##class(%Dictionary.CompiledClass).%ExistsId("MDX2JSON.Users||SetConfig")=0)
 	{
-		do ##class(MDX2JSON.Users).SetConfig(/*tInstaller.Evaluate("${Namespace}")*/"SYSMON",settings,"DeepSeeWeb")
+		do ##class(MDX2JSON.Users).SetConfig(tInstaller.Evaluate("${Namespace}"),settings,"DeepSeeWeb")
 	}
 	else{w "Please, update MDX2JSON."}
 	quit $$$OK
