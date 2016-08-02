@@ -75,6 +75,10 @@
 </Configuration>
 </Namespace>
 
+<If Condition='(##class(Config.Namespaces).Exists("${Namespace}")=0)'>
+<Log Text="Setup DSW settings."/>
+<RunInstall Class="kutac.monitor.utils.Installer" Method="SetDSWSettings"/>
+</If>
 
 
 <Log Text="Moving to configuring monitor" Level="0"/>
@@ -323,5 +327,26 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 	quit $$$OK
 ]]></Implementation>
 </Method>
+
+<Method name="SetDSWSettings">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>pVars,pLogLevel,tInstaller</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	set id = $classname()_"||DSWSettings"
+	quit:(##class(%Dictionary.CompiledXData).%ExistsId(id) = 0) $$$ERROR($$$GeneralError,"You don't export DSW settings")	
+	set xdata = ##class(%Dictionary.CompiledXData).%OpenId(id)
+	
+	set settings = xdata.Data.Read()
+	do ##class(MDX2JSON.Users).SetConfig(tInstaller.Evaluate("${Namespace}"),settings,"DeepSeeWeb")
+	quit $$$OK
+]]></Implementation>
+</Method>
+
+<XData name="DSWSettings">
+<MimeType>text/plain</MimeType>
+<Data><![CDATA[{"Default":{"addons":"","app":{"language":"en","hideFolders":false,"showImages":true,"isMetro":false},"namespaces":{"tiles":{"":{"":{"row":0,"col":0,"sizeX":1,"sizeY":1,"color":2,"fontColor":0,"icon":27,"title":""},"CPU Utilization":{"row":0,"col":1,"sizeX":1,"sizeY":1,"color":1,"fontColor":0,"icon":1,"title":"CPU Utilization"},"Database Sizes":{"row":0,"col":2,"sizeX":1,"sizeY":1,"color":1,"fontColor":0,"icon":1,"title":"Database Sizes"},"Globals Performance":{"row":0,"col":3,"sizeX":3,"sizeY":3,"color":1,"fontColor":0,"icon":1,"widget":1,"title":"Globals Performance"},"Journal size history":{"row":3,"col":4,"sizeX":1,"sizeY":1,"color":1,"fontColor":0,"icon":1,"title":"Journal size history"},"LicenseHistory":{"row":3,"col":5,"sizeX":1,"sizeY":1,"color":1,"fontColor":0,"icon":1,"title":"LicenseHistory"},"Object Performance":{"row":0,"col":6,"sizeX":1,"sizeY":1,"color":1,"fontColor":0,"icon":1,"title":"Object Performance"},"Routines Performance History":{"row":0,"col":7,"sizeX":1,"sizeY":1,"color":1,"fontColor":0,"icon":1,"title":"Routines Performance History"},"Various System Parameters Performance":{"row":0,"col":8,"sizeX":1,"sizeY":1,"color":1,"fontColor":0,"icon":1,"title":"Various System Parameters Performance"},"WIJ Performance":{"row":0,"col":9,"sizeX":1,"sizeY":1,"color":1,"fontColor":0,"icon":1,"title":"WIJ Performance"}},"mobile/":{"":{"row":0,"col":0,"sizeX":1,"sizeY":1,"color":2,"fontColor":0,"icon":27,"title":""},"CPU Utilization":{"row":0,"col":1,"sizeX":1,"sizeY":1,"color":1,"fontColor":0,"icon":0,"title":"CPU Utilization"},"Database Sizes":{"row":0,"col":2,"sizeX":4,"sizeY":3,"color":1,"fontColor":0,"icon":0,"widget":1,"title":"Database Sizes"},"Globals Performance":{"row":2,"col":1,"sizeX":1,"sizeY":1,"color":1,"fontColor":0,"icon":0,"title":"Globals Performance"},"Journal size history":{"row":1,"col":1,"sizeX":1,"sizeY":1,"color":1,"fontColor":0,"icon":0,"title":"Journal size history"},"LicenseHistory":{"row":0,"col":9,"sizeX":1,"sizeY":1,"color":1,"fontColor":0,"icon":0,"title":"LicenseHistory"},"Object Performance":{"row":0,"col":6,"sizeX":1,"sizeY":1,"color":1,"fontColor":0,"icon":0,"title":"Object Performance"},"Routines Performance History":{"row":0,"col":8,"sizeX":1,"sizeY":1,"color":1,"fontColor":0,"icon":0,"title":"Routines Performance History"},"Various System Parameters Performance":{"row":1,"col":6,"sizeX":4,"sizeY":2,"color":1,"fontColor":0,"icon":0,"title":"Various System Parameters Performance","widget":0},"WIJ Performance":{"row":0,"col":7,"sizeX":1,"sizeY":1,"color":1,"fontColor":0,"icon":0,"title":"WIJ Performance"}}},"widgets":{"mobile/DBSizes.dashboard":{"w2":{"isLegend":true,"showValues":false,"isTop":false,"showZero":false,"sizeY":5,"sizeX":5}}}}}}
+]]></Data>
+</XData>
 </Class>
 </Export>
