@@ -16,7 +16,7 @@ Installation
     where:
   
         {Namespace} is a namespace you want to install to. If it does not exist it would be created automatically. If it does exist only kutac package would be overwritten. If {Namespace} is not defined, then SYSMON namespace will be created. 
-    On this step installer would create (if needed) Namespace and corresponding database, download source code from GitHub and compile it, create required web application (named /cls/{Namespace}) if one does not exist (skipping web application creation process if one does exist), and map kutac package to %All namespace (which will be created if it does not exist).
+    On this step installer would create (if needed) Namespace and corresponding database, download source code from GitHub and compile it, create required web application (named /cls/{Namespace}) if one does not exist (skipping web application creation process if one does exist), and map globals,packages and routines to {Namespace}.
         
         
 Installation without fs access to server
@@ -30,7 +30,7 @@ Installation without fs access to server
     where: 
     
         {Namespace} is a namespace you want to install to. If it does not exist it would be created automatically. If it does exist only kutac package would be overwritten. If {Namespace} is not defined, then SYSMON namespace will be created. 
-    On this step installer would create (if needed) Namespace and corresponding database, download source code from GitHub and compile it, create required web application (named /cls/{Namespace}) if one does not exist (skipping web application creation process if one does exist), and map kutac package to %All namespace (which will be created if it does not exist).
+    On this step installer would create (if needed) Namespace and corresponding database, download source code from GitHub and compile it, create required web application (named /cls/{Namespace}) if one does not exist (skipping web application creation process if one does exist), and map globals,packages and routines to {Namespace}.
     
 Offline Installation
 -----------------
@@ -40,7 +40,7 @@ Offline Installation
 
         do ##class(%Installer.Installer).InstallFromCommandLine("{SourceDir}\cls\kutac\monitor\utils\Installer.cls.xml","Namespace={Namespace},SourceDir={SourceDir}")
 
-On this step installer would create (if needed) Namespace and corresponding database, import source code and compile it, create required web application (named /cls/{Namespace}) if one does not exist (skipping web application creation process if one does exist), and map kutac package to %All namespace (which will be created if it does not exist).
+On this step installer would create (if needed) Namespace and corresponding database, import source code and compile it, create required web application (named /cls/{Namespace}) if one does not exist (skipping web application creation process if one does exist), and map and map globals,packages and routines to {Namespace}.
 
 Default Settings
 ----------------

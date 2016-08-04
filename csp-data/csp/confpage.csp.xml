@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<CSP name="confpage.csp" application="/csp/sysmon/" default="1"><![CDATA[
+<html>
+<head>
+
+<title>SYSMON Configure page</title>
+
+</head>
+
+<script language="javascript">
+function classChk(checked, class_name)
+{
+	checked = Number(checked);
+	#call(..WriteClassChanges(checked,class_name))#;
+}
+
+function submitAll()
+{
+	#server(..SaveAll())#;
+}
+
+function stopMon()
+{
+	#server(..StopMonitor())#;
+}
+function startMon()
+{
+	#server(..StartMonitor())#;
+}
+function docLoc(page)
+{
+	var newloc = 'http://' + window.location.host + '/csp/documatic/%25CSP.Documatic.cls?PAGE=CLASS&LIBRARY=%25SYS&CLASSNAME=%25' + page;
+	window.open(newloc,"_blank","");
+}
+</script>
+
+<csp:method name = "WriteClassChanges" Arguments="a:%Integer,b:%String">
+new $namespace
+set $namespace = "%SYS"
+set ^SYSMONClassTemp(b) = a
+</csp:method>
+
+<csp:method name = "SaveAll">
+new $namespace
+set $namespace = "%SYS"
+if $data(^SYSMONClassTemp)
+{
+	set key = $order(^SYSMONClassTemp(""))
+	while (key '= "")
+	{
+		set value = ^SYSMONClassTemp(key) 
+		do ##class(%Monitor.ItemGroup).MetricsClassItemGroup(key,.id)
+	 	set class=##class(%Monitor.ItemGroup).%OpenId(id)
+	 	set class.Activated = value
+	 	do class.%Save()
+	 	set key = $order(^SYSMONClassTemp(key))
+	}
+	kill ^SYSMONClassTemp
+	&js<alert("Settings changed")>
+	&js<location.reload()>
+	
+}
+</csp:method>
+
+<csp:method name = "StopMonitor">
+new $namespace
+set $namespace = "%SYS"
+set sc = ##class(%SYS.Monitor).Stop()
+if sc=1 {
+	&js< alert(" System Monitor stopped")>
+} elseif sc=-1 {
+	&js< alert(" System Monitor not running!")>
+} else {
+	 &js< alert("ERROR: "+#($ZE)#)>
+}
+</csp:method>
+
+<csp:method name = "StartMonitor">
+new $namespace
+set $namespace = "%SYS"
+set sc = ##class(%SYS.Monitor).Start()
+if sc=1 {
+	&js< alert("System Monitor started")>
+} elseif sc =-1 {
+	&js< alert("System Monitor already running!")>
+} else {
+	&js< alert("ERROR: "+#($ZE)#)>
+}
+</csp:method>
+
+<body>
+
+<script language="cache" runat="server">
+new $namespace
+set $namespace = "%SYS"
+kill ^SYSMONClassTemp
+Set Rset = ##class(%Library.ResultSet).%New("%Monitor.ItemGroup:Classes")
+s Rset.RuntimeMode=1
+d Rset.Execute()
+</script>
+
+<b>Sysmon Applicatin Classes configuration:</b><br/>
+<form name="configform">
+<csp:while condition="Rset.Next()" counter="i">
+	<script language="cache" runat="server">
+		if Rset.GetData(2) {set chkd = "checked"}
+		else {set chkd = ""}
+	</script>
+	<input type="checkbox" name="#(i)#" value="#(Rset.GetData(1))#" #(chkd)# onclick="classChk(this.checked, this.value)">
+	<a name="#(i)#" href = "##(i)#" onClick="docLoc('#($p(Rset.GetData(1),"%",2))#'); return false;">#(Rset.GetData(1))#</a></br>
+</csp:while>
+<input type="button" value="Apply" onclick="submitAll();"/>
+</form>
+
+<br/><br/>
+
+<b>Control System Monitor:</b><br/>
+<form name="stspform">
+<input type="button" value="Start SYSMON" onclick="startMon();"/>
+<input type="button" value="Stop SYSMON" onclick="stopMon();"/>
+</form>
+</body>
+</html>
+]]></CSP>
+</Export>
