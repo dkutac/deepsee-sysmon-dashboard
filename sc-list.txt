@@ -15,4 +15,5 @@ kutac.monitor.library.Dashboards.cls
 kutac.monitor.library.Mobile.cls
 kutac.monitor.library.Pivots.cls
 kutac.monitor.task.Builder.cls
+kutac.monitor.utils.CashLocale.cls
 kutac.monitor.utils.Installer.cls

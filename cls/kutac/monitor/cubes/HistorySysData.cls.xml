@@ -8,7 +8,8 @@
 <TimeCreated>63539,56609.115575</TimeCreated>
 <DependsOn>kutac.monitor.history.SysData</DependsOn>
 
-<Parameter name="DOMAIN"/>
+<Parameter name="DOMAIN">
+</Parameter>
 
 <XData name="Cube">
 <Description>

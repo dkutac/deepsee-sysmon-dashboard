@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<Class name="kutac.monitor.utils.CashLocale">
+<Super>%RegisteredObject</Super>
+<TimeCreated>64138,62393.66068</TimeCreated>
+
+<Parameter name="DOMAIN">
+<Default>SYSMON</Default>
+</Parameter>
+
+<Method name="DefineL18N">
+<ClassMethod>1</ClassMethod>
+<Implementation><![CDATA[
+	set x = $$$Text("Database Sizes")
+	set x = $$$Text("Database Free Space")
+]]></Implementation>
+</Method>
+</Class>
+</Export>
