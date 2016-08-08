@@ -133,7 +133,7 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 <Implementation><![CDATA[
     Set Namespace=tInstaller.Evaluate("${Namespace}")
     Do tInstaller.PushNS("%SYS")
-    Set tSC = ..Update(Namespace, "intersystems-ru", "deepsee-sysmon-dashboards", "Branch_Install_remaster")
+    Set tSC = ..Update(Namespace, "intersystems-ru", "deepsee-sysmon-dashboards", "master")
     Do tInstaller.PopNS()
     If $$$ISERR(tSC) Throw ##class(%Installer.Exception).CreateFromStatus(tSC)
     quit $$$OK
