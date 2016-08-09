@@ -9,6 +9,7 @@
 <DependsOn>kutac.monitor.history.SysData</DependsOn>
 
 <Parameter name="DOMAIN">
+<Default>SYSMON</Default>
 </Parameter>
 
 <XData name="Cube">
