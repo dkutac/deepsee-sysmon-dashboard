@@ -49,5 +49,12 @@
 	set x = $$$Text("ECP")
 ]]></Implementation>
 </Method>
+
+<Method name="SetLocale">
+<ClassMethod>1</ClassMethod>
+<CodeMode>objectgenerator</CodeMode>
+<Implementation><![CDATA[	do ##class(%MessageDictionary).SetSessionLanguage("en")
+]]></Implementation>
+</Method>
 </Class>
 </Export>
