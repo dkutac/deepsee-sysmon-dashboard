@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<Document name="dash-actions-State Info.dashboard.dfi">
+<dashboard xmlns="http://www.intersystems.com/deepsee/library" name="State Info" folderName="dash/actions" title="$$$State Info &amp; actions/SYSMON" description="" keywords="" owner="" shared="true" public="true" locked="false" resource="" timeCreated="2014-12-18T11:39:15.825Z" createdBy="kutac" category="Actions" bookCover="{background: {style:&apos;background-color:white;opacity:0.29;&apos;,src:&apos;covers/10996094_s.jpg&apos;,imageStyle:&apos;width:134px;height:190px;&apos;},header: {text:&apos;$type&apos;},title: {text:&apos;$title&apos;,style:&apos;font-weight: bold;color:rgb(218, 129, 61);&apos;},image: {src:&apos;deepsee/ds2_dashboard_44.png&apos;,imageStyle:&apos;width:64px;height:64px;&apos;},footer: {text:&apos;$owner&apos;}}" scheme="" worklistCount="0" snapTo="true" snapGrid="true" gridRows="10" gridCols="10" canResize="true" canModify="true" showTitleBar="true" titleBarOpacity="" titleBarColor="" selectedTitleBarOpacity="" selectedTitleBarColor="" titleBarTextColor="" selectedTitleBarTextColor="" titleBarFont="" companyName="" companyLogo="" companyStyle="" backgroundColor="white" backgroundImage="none" backgroundRepeat="no-repeat" backgroundSize="100% 100%" backgroundOpacity="1" widgetBorders="1px solid #F0F0F0" widgetBordersSwitch="edit" widgetBordersColor="#F0F0F0" widgetBordersStyle="solid" widgetBordersWidth="1" widgetBordersToggle="true">
+  <widget name="Widget1" type="scoreCardWidget" subtype="big" subtypeClass="" title="" dataSource="SYSMON Actions.kpi" dataLink="" drillDownDataSource="" width="200" height="200" sidebarContent="" showSidebar="false" sidebarWidth="" maximized="false" homeRowL="0" homeColL="0" colSpanL="10" rowSpanL="3" showToolbar="true" showToolbarBottomBorder="true" showToolbarOnlyWhenMaximized="false" colorToolbar="#F0F0F0" opacityToolbar="1" backgroundColor="#F0F0F0" opacity="1" theme="" dataColorList="">
+    <control name="" action="SyncCubes" target="*" targetProperty="" location="widget" type="auto" controlClass="" label="Synchronize Data" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+    <control name="" action="refresh" target="*" targetProperty="" location="widget" type="auto" controlClass="" label="" title="" value="" text="" readOnly="false" valueList="" displayList="" activeWhen="">
+      <valueRequired>false</valueRequired>
+    </control>
+    <override name="scoreCard">{width:1050,cardSize:'big',columns:[{display:'label',_type:'scoreCardColumn'},{dataValue:'Monitor',display:'value',label:'Monitor status',_type:'scoreCardColumn'},{dataValue:'HealthControl',label:'Health Control',_type:'scoreCardColumn'},{dataValue:'LastCubeBuildStatus',display:'lamp',label:'Last Cubes Build Status',rangeLower:'0',rangeUpper:'1',_type:'scoreCardColumn'},{dataValue:'LastCubeBuildTime',label:'Last Cubes Build Time',_type:'scoreCardColumn'}],selectedIndex:'0',_type:'scoreCard'}</override>
+  </widget>
+</dashboard>
+</Document></Export>

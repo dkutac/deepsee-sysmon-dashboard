@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<Class name="kutac.monitor.utils.CashLocale">
+<Super>%RegisteredObject</Super>
+<TimeCreated>64138,62393.66068</TimeCreated>
+
+<Parameter name="DOMAIN">
+<Default>SYSMON</Default>
+</Parameter>
+
+<Method name="DefineL18N">
+<ClassMethod>1</ClassMethod>
+<Implementation><![CDATA[
+	set x = $$$Text("Database Sizes")
+	set x = $$$Text("Database Free Space")
+	set x = $$$Text("CPU Utilization")
+	set x = $$$Text("Hours")
+	set x = $$$Text("Minutes")
+	set x = $$$Text("Globals Performance")
+	set x = $$$Text("Global Read\Write Performance")
+	set x = $$$Text("Gloref Performance")
+	set x = $$$Text("Journal size history")
+	set x = $$$Text("Journal Size")
+	set x = $$$Text("License History")
+	set x = $$$Text("Object Performance")
+	set x = $$$Text("Routines Performance History")
+	set x = $$$Text("Routines Performance")
+	set x = $$$Text("Various System Parameters Performance")
+	set x = $$$Text("WIJ Performance")
+	set x = $$$Text("State Info & actions")
+	set x = $$$Text("Performance - Globals")
+	set x = $$$Text("Global References (AVG)")
+	set x = $$$Text("Global Physical Loads and Reads (AVG)")
+	set x = $$$Text("Performance - Objects")
+	set x = $$$Text("Objects Performance (AVG)")
+	set x = $$$Text("Performance - Routines")
+	set x = $$$Text("Routine References (AVG)")
+	set x = $$$Text("Routine Loads (AVG)")
+	set x = $$$Text("Seizes")
+	set x = $$$Text("Seize Counters")
+	set x = $$$Text("WIJ Performance (AVG)")
+	set x = $$$Text("Databases Status")
+	set x = $$$Text("Database size (in MB)")
+	set x = $$$Text("Database Files")
+	set x = $$$Text("DB File Size (in MB) in Time")
+	set x = $$$Text("Journal Size - Daily figures")
+	set x = $$$Text("Various System Metrics")
+	set x = $$$Text("Licenses Used")
+	set x = $$$Text("ECP")
+]]></Implementation>
+</Method>
+
+<Method name="SetLocale">
+<ClassMethod>1</ClassMethod>
+<CodeMode>objectgenerator</CodeMode>
+<Implementation><![CDATA[	do ##class(%MessageDictionary).SetSessionLanguage("en")
+]]></Implementation>
+</Method>
+</Class>
+</Export>
