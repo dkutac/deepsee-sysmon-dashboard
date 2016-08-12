@@ -34,7 +34,7 @@
 <Namespace Name="${Namespace}" Create="no">
 <Log Text="Creating web application /csp/${Namespace}" Level="0"/>
 
-<CSPApplication Url='#{$ZCONVERT("/csp/${Namespace}", "L")}' Directory='#{##class(%DeepSee.Report.UI.reportModelServer).GetCSPDirectory()_$ZCONVERT("${Namespace}", "L")}' AuthenticationMethods="64" IsNamespaceDefault="true" Recurse="true"/>
+<CSPApplication Url='#{$ZCONVERT("/csp/${Namespace}", "L")}' Directory='#{##class(%DeepSee.Report.UI.reportModelServer).GetCSPDirectory()_$ZCONVERT("${Namespace}", "L")}' AuthenticationMethods="64" IsNamespaceDefault="true" Recurse="true" Grant="%All"/>
 <RunInstall Class="kutac.monitor.utils.Installer" Method="EnableDeepSee"/>
 
 <Log Text="End creating web application /csp/${Namespace}" Level="0"/>
