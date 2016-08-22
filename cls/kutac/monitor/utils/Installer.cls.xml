@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2016.1 (Build 656U)" ts="2016-08-22 18:46:09">
+<Export generator="Cache" version="25">
 <Class name="kutac.monitor.utils.Installer">
-<TimeChanged>64152,67455</TimeChanged>
 <TimeCreated>63732,50627.865496</TimeCreated>
 
 <XData name="Install">
@@ -316,6 +315,8 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 	
 	set CSPPath = $system.CSP.GetFileName($system.CSP.GetDefaultApp($namespace)_"/")
 	set fileDirectory = $Piece(url, CSPDirInRepo, 2)
+	set dirChain = $p(CSPPath_fileDirectory,$p($translate(CSPPath_fileDirectory,"\","/"),"/",*),1)
+	do ##class(%File).CreateDirectoryChain(dirChain)
 	set st = filestream.LinkToFile(CSPPath_fileDirectory)
 	
 	While 'contentStream.AtEnd
