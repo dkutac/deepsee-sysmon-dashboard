@@ -8,7 +8,9 @@
 <TimeCreated>63327,55773.939425</TimeCreated>
 <DependsOn>kutac.monitor.history.PerfData</DependsOn>
 
-<Parameter name="DOMAIN"/>
+<Parameter name="DOMAIN">
+<Default>SYSMON</Default>
+</Parameter>
 
 <XData name="Cube">
 <Description>
