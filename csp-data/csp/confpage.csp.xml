@@ -2,11 +2,11 @@
 <Export generator="Cache" version="25">
 <CSP name="confpage.csp" application="/csp/sysmon/" default="1"><![CDATA[
 <html>
-<head>
-
-<title>SYSMON Configure page</title>
-
-</head>
+	<head>
+		<link rel="stylesheet" href="./lib/css/bootstrap.min.css">
+		<link rel="stylesheet" href="./lib/css/bootstrap-theme.min.css">
+		<title>SYSMON Configure page</title>
+	</head>
 
 <script language="javascript">
 function classChk(checked, class_name)
@@ -89,38 +89,54 @@ if sc=1 {
 }
 </csp:method>
 
-<body>
+	<body>
+		<script language="cache" runat="server">
+		new $namespace
+		set $namespace = "%SYS"
+		kill ^SYSMONClassTemp
+		Set Rset = ##class(%Library.ResultSet).%New("%Monitor.ItemGroup:Classes")
+		s Rset.RuntimeMode=1
+		d Rset.Execute()
+		</script>
 
-<script language="cache" runat="server">
-new $namespace
-set $namespace = "%SYS"
-kill ^SYSMONClassTemp
-Set Rset = ##class(%Library.ResultSet).%New("%Monitor.ItemGroup:Classes")
-s Rset.RuntimeMode=1
-d Rset.Execute()
-</script>
-
-<b>Sysmon Applicatin Classes configuration:</b><br/>
-<form name="configform">
-<csp:while condition="Rset.Next()" counter="i">
-	<script language="cache" runat="server">
-		if Rset.GetData(2) {set chkd = "checked"}
-		else {set chkd = ""}
-	</script>
-	<input type="checkbox" name="#(i)#" value="#(Rset.GetData(1))#" #(chkd)# onclick="classChk(this.checked, this.value)">
-	<a name="#(i)#" href = "##(i)#" onClick="docLoc('#($p(Rset.GetData(1),"%",2))#'); return false;">#(Rset.GetData(1))#</a></br>
-</csp:while>
-<input type="button" value="Apply" onclick="submitAll();"/>
-</form>
-
-<br/><br/>
-
-<b>Control System Monitor:</b><br/>
-<form name="stspform">
-<input type="button" value="Start SYSMON" onclick="startMon();"/>
-<input type="button" value="Stop SYSMON" onclick="stopMon();"/>
-</form>
-</body>
+		<div style="width: 30%; margin: auto;">
+			<div>
+				<div style="text-align: center;">
+					<h4><b>Sysmon Applicatin Classes configuration:</b></h4>
+				</div>
+				<div style="padding: auto;">
+					<form name="configform">
+					<csp:while condition="Rset.Next()" counter="i">
+						<script language="cache" runat="server">
+							if Rset.GetData(2) {set chkd = "checked"}
+							else {set chkd = ""}
+						</script>
+						<div style="margin-bottom: 1px;" class="input-group">
+							<span style="text-align: left; font-size: 12px; padding: 4px 12px;" class="input-group-addon" >
+								<input type="checkbox" name="#(i)#" value="#(Rset.GetData(1))#" #(chkd)# onclick="classChk(this.checked, this.value)">
+							</span>
+							<span style="text-align: left; font-size: 12px; padding: 4px 12px;" class="input-group-addon">
+								<a name="#(i)#" href = "##(i)#" onClick="docLoc('#($p(Rset.GetData(1),"%",2))#'); return false;">#(Rset.GetData(1))#</a></br>
+							</span>
+						</div>
+					</csp:while>
+					<div style="margin: auto; width: 252px;">
+						<input style="margin-top: 2px; width: 250px;" class="btn btn-success" type="button" value="Apply" onclick="submitAll();"/>
+					</div>
+					</form>
+				</div>
+			</div>
+			<div style="margin-top: 3em;">
+				<div style="text-align: center;">
+						<h4><b>Control System Monitor:</b></h4>
+				</div>
+				<div style="width: 243px; margin: auto;">
+					<input class="btn btn-primary" type="button" value="Start SYSMON" onclick="startMon();"/>
+					<input class="btn btn-danger" type="button" value="Stop SYSMON" onclick="stopMon();"/>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>
 ]]></CSP>
 </Export>

@@ -1,4 +1,6 @@
 <cspapp>/confpage.csp
+<cspapp>/lib/css/bootstrap-theme.min.css
+<cspapp>/lib/css/bootstrap.min.css
 dash-actions-State Info.dashboard.dfi
 dash-perf-history-Dash1.dashboard.dfi
 dash-perf-history-ECP.dashboard.dfi

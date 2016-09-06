@@ -314,7 +314,7 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 	do filestream.Rewind()
 	
 	set CSPPath = $system.CSP.GetFileName($system.CSP.GetDefaultApp($namespace)_"/")
-	set fileDirectory = $Piece(url, CSPDirInRepo, 2)
+	set fileDirectory = $Piece(url, CSPDirInRepo, *)
 	set dirChain = $p(CSPPath_fileDirectory,$p($translate(CSPPath_fileDirectory,"\","/"),"/",*),1)
 	do ##class(%File).CreateDirectoryChain(dirChain)
 	set st = filestream.LinkToFile(CSPPath_fileDirectory)
