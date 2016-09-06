@@ -112,10 +112,10 @@ if sc=1 {
 							else {set chkd = ""}
 						</script>
 						<div style="margin-bottom: 1px;" class="input-group">
-							<span style="text-align: left; font-size: 12px; padding: 4px 12px;" class="input-group-addon" >
+							<span style="text-align: left; font-size: 12px; padding: 4px 12px; border-right: 0px;" class="input-group-addon" >
 								<input type="checkbox" name="#(i)#" value="#(Rset.GetData(1))#" #(chkd)# onclick="classChk(this.checked, this.value)">
 							</span>
-							<span style="text-align: left; font-size: 12px; padding: 4px 12px;" class="input-group-addon">
+							<span style="text-align: left; font-size: 12px; padding: 4px 12px; border-left: 0px;" class="input-group-addon">
 								<a name="#(i)#" href = "##(i)#" onClick="docLoc('#($p(Rset.GetData(1),"%",2))#'); return false;">#(Rset.GetData(1))#</a></br>
 							</span>
 						</div>
