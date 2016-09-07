@@ -4,7 +4,6 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="./lib/css/bootstrap.min.css">
-		<link rel="stylesheet" href="./lib/css/bootstrap-theme.min.css">
 		<title>SYSMON Configure page</title>
 	</head>
 
