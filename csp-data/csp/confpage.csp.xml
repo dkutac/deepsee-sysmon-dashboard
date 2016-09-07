@@ -72,7 +72,7 @@ if $data(^SYSMONClassTemp)
 
 <csp:method name = "StopMonitor">
 new $namespace
-set $namespace = "SYSMON"
+set $namespace = "%SYS"
 set sc = ##class(%SYS.Monitor).Stop()
 if sc=1 {
 	&js< alert(" System Monitor stopped")>
@@ -85,7 +85,7 @@ if sc=1 {
 
 <csp:method name = "StartMonitor">
 new $namespace
-set $namespace = "SYSMON"
+set $namespace = "%SYS"
 set sc = ##class(%SYS.Monitor).Start()
 if sc=1 {
 	&js< alert("System Monitor started")>
@@ -98,7 +98,7 @@ if sc=1 {
 
 <csp:method name = "CheckMon">
 new $namespace
-set $namespace = "SYSMON"
+set $namespace = "%SYS"
 set sc = ##class(%SYS.Monitor).State()
 if sc=0 {
 	&js< document.getElementById('btnstart').disabled = false;
