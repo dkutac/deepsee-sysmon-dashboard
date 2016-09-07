@@ -23,16 +23,23 @@ function submitAll()
 function stopMon()
 {
 	#server(..StopMonitor())#;
+	checkMon();
 }
 function startMon()
 {
 	#server(..StartMonitor())#;
+	checkMon();
 }
 function docLoc(page)
 {
 	var newloc = 'http://' + window.location.host + '/csp/documatic/%25CSP.Documatic.cls?PAGE=CLASS&LIBRARY=%25SYS&CLASSNAME=%25' + page;
 	window.open(newloc,"_blank","");
 }
+function checkMon()
+{
+	#call(..CheckMon())#;
+}
+checkMon();
 </script>
 
 <csp:method name = "WriteClassChanges" Arguments="a:%Integer,b:%String">
@@ -65,7 +72,7 @@ if $data(^SYSMONClassTemp)
 
 <csp:method name = "StopMonitor">
 new $namespace
-set $namespace = "%SYS"
+set $namespace = "SYSMON"
 set sc = ##class(%SYS.Monitor).Stop()
 if sc=1 {
 	&js< alert(" System Monitor stopped")>
@@ -78,7 +85,7 @@ if sc=1 {
 
 <csp:method name = "StartMonitor">
 new $namespace
-set $namespace = "%SYS"
+set $namespace = "SYSMON"
 set sc = ##class(%SYS.Monitor).Start()
 if sc=1 {
 	&js< alert("System Monitor started")>
@@ -88,6 +95,20 @@ if sc=1 {
 	&js< alert("ERROR: "+#($ZE)#)>
 }
 </csp:method>
+
+<csp:method name = "CheckMon">
+new $namespace
+set $namespace = "SYSMON"
+set sc = ##class(%SYS.Monitor).State()
+if sc=0 {
+	&js< document.getElementById('btnstart').disabled = false;
+		 document.getElementById('btnstop').disabled = true;>
+} else{
+	&js< document.getElementById('btnstop').disabled = false;
+		 document.getElementById('btnstart').disabled = true;>
+} 
+</csp:method>
+
 
 	<body>
 		<script language="cache" runat="server">
@@ -102,7 +123,7 @@ if sc=1 {
 		<div style="width: 30%; margin: auto;">
 			<div>
 				<div style="text-align: center;">
-					<h4><b>Sysmon Applicatin Classes configuration:</b></h4>
+					<h4><b>Sysmon Application Classes configuration:</b></h4>
 				</div>
 				<div style="padding: auto;">
 					<form name="configform">
@@ -130,9 +151,9 @@ if sc=1 {
 				<div style="text-align: center;">
 						<h4><b>Control System Monitor:</b></h4>
 				</div>
-				<div style="width: 243px; margin: auto;">
-					<input class="btn btn-primary" type="button" value="Start SYSMON" onclick="startMon();"/>
-					<input class="btn btn-danger" type="button" value="Stop SYSMON" onclick="stopMon();"/>
+				<div style="width: 250px; margin: auto;">
+					<input id="btnstart" class="btn btn-primary" type="button" value="Start SYSMON" onclick="startMon();"/>
+					<input id="btnstop" class="btn btn-danger" type="button" value="Stop SYSMON" onclick="stopMon();"/>
 				</div>
 			</div>
 		</div>
