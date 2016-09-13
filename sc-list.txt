@@ -21,6 +21,7 @@ kutac.monitor.cubes.HistoryPerfDataWD.cls
 kutac.monitor.cubes.HistorySysData.cls
 kutac.monitor.cubes.HistorySysDataDB.cls
 kutac.monitor.current.PerfData.cls
+kutac.monitor.current.SysData.cls
 kutac.monitor.current.SysDataDB.cls
 kutac.monitor.history.PerfData.cls
 kutac.monitor.history.PerfDataWD.cls
@@ -36,6 +37,8 @@ kutac.monitor.utils.Installer.cls
 mobile-CPUUtilization.dashboard.dfi
 mobile-Current Performance Indicators.dashboard.dfi
 mobile-Current Performance Indicators 2.dashboard.dfi
+mobile-Current System Parameters.dashboard.dfi
+mobile-Current System Parameters 2.dashboard.dfi
 mobile-DBSizes.dashboard.dfi
 mobile-GloPerf.dashboard.dfi
 mobile-JrnSizeHistoryTC.dashboard.dfi
@@ -51,6 +54,8 @@ pivots-monitor-current-perf-KPI Transform Obj.pivot.dfi
 pivots-monitor-current-perf-KPI Transform Rtn.pivot.dfi
 pivots-monitor-current-perf-KPI Transform WIJ.pivot.dfi
 pivots-monitor-current-sys-DatabaseSize.pivot.dfi
+pivots-monitor-current-sys-KPI Transform CPU.pivot.dfi
+pivots-monitor-current-sys-KPI Transform Lic.pivot.dfi
 pivots-monitor-history-DatabaseFilesHistory.pivot.dfi
 pivots-monitor-history-PerfDataGloPhysRW.pivot.dfi
 pivots-monitor-history-PerfDataGloRef.pivot.dfi
