@@ -1,6 +1,77 @@
+<cspapp>/confpage.csp
+<cspapp>/lib/css/bootstrap.min.css
+dash-actions-State Info.dashboard.dfi
+dash-perf-history-Dash1.dashboard.dfi
+dash-perf-history-ECP.dashboard.dfi
+dash-perf-history-History WIJ.dashboard.dfi
+dash-perf-history-Performance History Objects.dashboard.dfi
+dash-perf-history-Performance History Routines.dashboard.dfi
+dash-perf-history-Seizes.dashboard.dfi
+dash-sys-current-Databases.dashboard.dfi
+dash-sys-history-CPU Utilization.dashboard.dfi
+dash-sys-history-Database Files.dashboard.dfi
+dash-sys-history-System Dashboard 1.dashboard.dfi
+dash-sys-history-System Dashboard 2.dashboard.dfi
+dash-sys-history-System Dashboard 3.dashboard.dfi
+dash-sys-history-WD Cycle Buffers.dashboard.dfi
+dash-sys-history-WD Cycle Timers.dashboard.dfi
+kutac.monitor.cubes.CurrentSysDataDB.cls
+kutac.monitor.cubes.HistoryPerfData.cls
+kutac.monitor.cubes.HistoryPerfDataWD.cls
+kutac.monitor.cubes.HistorySysData.cls
+kutac.monitor.cubes.HistorySysDataDB.cls
+kutac.monitor.current.PerfData.cls
+kutac.monitor.current.SysDataDB.cls
+kutac.monitor.history.PerfData.cls
+kutac.monitor.history.PerfDataWD.cls
+kutac.monitor.history.SysData.cls
+kutac.monitor.history.SysDataDB.cls
+kutac.monitor.kpi.Actions.cls
+kutac.monitor.library.Dashboards.cls
+kutac.monitor.library.Mobile.cls
+kutac.monitor.library.Pivots.cls
+kutac.monitor.task.Builder.cls
+kutac.monitor.utils.CashLocale.cls
+kutac.monitor.utils.Installer.cls
+mobile-CPUUtilization.dashboard.dfi
 mobile-Current Performance Indicators.dashboard.dfi
 mobile-Current Performance Indicators 2.dashboard.dfi
+mobile-DBSizes.dashboard.dfi
+mobile-GloPerf.dashboard.dfi
+mobile-JrnSizeHistoryTC.dashboard.dfi
+mobile-LicenseHistory.dashboard.dfi
+mobile-ObjPerf.dashboard.dfi
+mobile-RoutinesPerf.dashboard.dfi
+mobile-SysCPUUtilizationMobile.pivot.dfi
+mobile-SysParamsPerf.dashboard.dfi
+mobile-WijPerf.dashboard.dfi
+pivots-monitor-current-DatabaseSizes.pivot.dfi
 pivots-monitor-current-perf-KPI Transform Globals.pivot.dfi
 pivots-monitor-current-perf-KPI Transform Obj.pivot.dfi
 pivots-monitor-current-perf-KPI Transform Rtn.pivot.dfi
 pivots-monitor-current-perf-KPI Transform WIJ.pivot.dfi
+pivots-monitor-current-sys-DatabaseSize.pivot.dfi
+pivots-monitor-history-DatabaseFilesHistory.pivot.dfi
+pivots-monitor-history-PerfDataGloPhysRW.pivot.dfi
+pivots-monitor-history-PerfDataGloRef.pivot.dfi
+pivots-monitor-history-PerfDataObjects.pivot.dfi
+pivots-monitor-history-PerfDataRoutines.pivot.dfi
+pivots-monitor-history-PerfDataRoutinesPhysLoads.pivot.dfi
+pivots-monitor-history-PerfDataSeize.pivot.dfi
+pivots-monitor-history-PerfDataWIJ.pivot.dfi
+pivots-monitor-history-SysCPUUtilization.pivot.dfi
+pivots-monitor-history-SysECP.pivot.dfi
+pivots-monitor-history-SysJournal.pivot.dfi
+pivots-monitor-history-SysJournalDay.pivot.dfi
+pivots-monitor-history-SysLicUsed.pivot.dfi
+pivots-monitor-history-SysVarious.pivot.dfi
+pivots-monitor-history-fortc-CPUUtilization.pivot.dfi
+pivots-monitor-history-fortc-CPUUtilization_Hours.pivot.dfi
+pivots-monitor-history-fortc-GloReadWriteMinutes.pivot.dfi
+pivots-monitor-history-fortc-GloRefMinutes.pivot.dfi
+pivots-monitor-history-fortc-JrnSizeTC.pivot.dfi
+pivots-monitor-history-fortc-LicenseMinutes.pivot.dfi
+pivots-monitor-history-fortc-ObjPerfMinutes.pivot.dfi
+pivots-monitor-history-fortc-ParamsMinutes.pivot.dfi
+pivots-monitor-history-fortc-PerfDataWIJMinutes.pivot.dfi
+pivots-monitor-history-fortc-RtnPerfMinutes.pivot.dfi

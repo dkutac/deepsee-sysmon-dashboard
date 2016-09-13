@@ -21,11 +21,20 @@ This XData definition defines the KPI.</Description>
 <kpi xmlns="http://www.intersystems.com/deepsee/kpi"
  name="CurrPerfData" sourceType="sql"
  caption="Current Performance Data"
- sql="SELECT top 1 * FROM SYS_History.PerfData order by DateTime Desc"
 >
 <property columnNo="1" name="ID" />
 <property columnNo="2" name="DateTime" />
 <property columnNo="3" name="PerfGloRef" />
+<property columnNo="4" name="PerfPhysReads" />
+<property columnNo="5" name="PerfPhysWrites" />
+<property columnNo="6" name="PerfObjHit" />
+<property columnNo="7" name="PerfObjDel" />
+<property columnNo="8" name="PerfObjMiss" />
+<property columnNo="9" name="PerfObjNew" />
+<property columnNo="10" name="PerfObjLoad" />
+<property columnNo="11" name="PerfRtnLoad" />
+<property columnNo="12" name="PerfRtnCallLocal" />
+<property columnNo="13" name="PerfWIJWrites" />
 </kpi>
 ]]></Data>
 </XData>
@@ -44,7 +53,10 @@ This is a good place to override properties, such as range and threshold.</Descr
 Return an SQL statement to execute.</Description>
 <FormalSpec><![CDATA[&pSQL:%String]]></FormalSpec>
 <ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[	Quit $$$OK
+<Implementation><![CDATA[
+	set pSQL = "SELECT top 1 ID, DateTime, Perf_GloRef, Perf_PhysReads, Perf_PhysWrites, Perf_ObjHit, Perf_ObjDel, Perf_ObjMiss, Perf_ObjNew,"_
+	" Perf_ObjLoad, Perf_RtnLoad, Perf_RtnCallLocal, Perf_WIJWrites FROM SYS_History.PerfData order by DateTime Desc"
+	Quit $$$OK
 ]]></Implementation>
 </Method>
 
