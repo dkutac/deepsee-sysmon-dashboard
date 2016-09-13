@@ -92,31 +92,31 @@ Cube definition from Architect.</Description>
   </measure>
   <measure name="PerfObjHit" disabled="false" sourceProperty="PerfObjHit" aggregate="AVG" type="integer" hidden="false" searchable="false">
   </measure>
-  <calculatedMember name="Perf_PhysReads" displayName="Phys Reads" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfPhysReads&quot;,1)" hidden="false">
+  <calculatedMember name="Perf_PhysReads" displayName="Phys Reads" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfPhysReads&quot;,1)" formatString="#,#" hidden="false">
   </calculatedMember>
-  <calculatedMember name="Perf_GloRef" displayName="Gloref Performance" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfGloRef&quot;,1)" hidden="false">
+  <calculatedMember name="Perf_GloRef" displayName="Gloref Performance" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfGloRef&quot;,1)" formatString="#,#" hidden="false">
   </calculatedMember>
   <calculatedMember name="DateTime" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;DateTime&quot;,1)" hidden="false">
   </calculatedMember>
   <calculatedMember name="ID" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;ID&quot;,1)" hidden="false">
   </calculatedMember>
-  <calculatedMember name="Perf_PhysWrites" displayName="Phys Reads" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfPhysWrites&quot;,1)" hidden="false">
+  <calculatedMember name="Perf_PhysWrites" displayName="Phys Reads" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfPhysWrites&quot;,1)" formatString="#,#" hidden="false">
   </calculatedMember>
-  <calculatedMember name="Perf_WIJWrites" displayName="WIJ Writes" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfWIJWrites&quot;,1)" hidden="false">
+  <calculatedMember name="Perf_WIJWrites" displayName="WIJ Writes" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfWIJWrites&quot;,1)" formatString="#,#" hidden="false">
   </calculatedMember>
-  <calculatedMember name="Perf_RtnCallLocal" displayName="Routine Call Local" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfRtnCallLocal&quot;,1)" hidden="false">
+  <calculatedMember name="Perf_RtnCallLocal" displayName="Routine Call Local" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfRtnCallLocal&quot;,1)" formatString="#,#" hidden="false">
   </calculatedMember>
-  <calculatedMember name="Perf_RtnLoad" displayName="Routine Load" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfRtnLoad&quot;,1)" hidden="false">
+  <calculatedMember name="Perf_RtnLoad" displayName="Routine Load" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfRtnLoad&quot;,1)" formatString="#,#" hidden="false">
   </calculatedMember>
-  <calculatedMember name="Perf_ObjLoad" displayName="Objects Load" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfObjLoad&quot;,1)" hidden="false">
+  <calculatedMember name="Perf_ObjLoad" displayName="Objects Load" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfObjLoad&quot;,1)" formatString="#,#" hidden="false">
   </calculatedMember>
-  <calculatedMember name="Perf_ObjNew" displayName="New Objects" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfObjNew&quot;,1)" hidden="false">
+  <calculatedMember name="Perf_ObjNew" displayName="New Objects" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfObjNew&quot;,1)" formatString="#,#" hidden="false">
   </calculatedMember>
-  <calculatedMember name="Perf_ObjMiss" displayName="Miss Objects" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfObjMiss&quot;,1)" hidden="false">
+  <calculatedMember name="Perf_ObjMiss" displayName="Miss Objects" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfObjMiss&quot;,1)" formatString="#,#" hidden="false">
   </calculatedMember>
-  <calculatedMember name="Perf_ObjDel" displayName="Deleted Objects" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfObjDel&quot;,1)" hidden="false">
+  <calculatedMember name="Perf_ObjDel" displayName="Deleted Objects" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfObjDel&quot;,1)" formatString="#,#" hidden="false">
   </calculatedMember>
-  <calculatedMember name="Perf_ObjHit" displayName="Object Hit" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfObjHit&quot;,1)" hidden="false">
+  <calculatedMember name="Perf_ObjHit" displayName="Object Hit" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrPerfData&quot;,&quot;PerfObjHit&quot;,1)" formatString="#,#" hidden="false">
   </calculatedMember>
   <listing name="Details" disabled="false" listingType="table" fieldList="%ID,mDate,mTime,PerfGloRef">
   </listing>
