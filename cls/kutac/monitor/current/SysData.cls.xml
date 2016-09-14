@@ -17,7 +17,7 @@ This XData definition defines the KPI.</Description>
 <XMLNamespace>http://www.intersystems.com/deepsee/kpi</XMLNamespace>
 <Data><![CDATA[
 <kpi xmlns="http://www.intersystems.com/deepsee/kpi"
- name="CurrSysData" sourceType="sql"
+ name="CurrSysData" sourceType="manual"
  caption="Current System Data"
 >
 <property columnNo="1" name="ID" />
@@ -46,7 +46,7 @@ Return an SQL statement to execute.</Description>
 <FormalSpec><![CDATA[&pSQL:%String]]></FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
-	set pSQL = "SELECT top 1 ID, DateTime, Sys_CPUIdle, Sys_CPUKernel, Sys_CPUUser, Sys_LicUsedDist, Sys_LicUsedLocal "_
+	set pSQL = "SELECT top 1 ID, DateTime, Sys_CPUIdle, Sys_CPUKernel, Sys_CPUUser, Sys_LicUsedDist "_
 				"FROM SYS_History.SysData order by DateTime Desc"
 	Quit $$$OK
 ]]></Implementation>
@@ -63,6 +63,33 @@ This callback is invoked from a dashboard when an action defined by this dashboa
 	// pContext contains information from the client
 	// and can be used to return information.
 	Quit $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="%OnExecute">
+<Description>
+Get data for this KPI manually.
+This is implemented by subclasses that provide manual data.</Description>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	Set tSC = $$$OK
+	Try {
+		&sql(SELECT top 1 ID, DateTime, Sys_CPUIdle, Sys_CPUKernel, Sys_CPUUser, Sys_LicUsedDist
+				INTO :ID, :DateTime, :SysCPUIdle, :SysCPUKernel, :SysCPUUser, :SysLicUsedDist
+				FROM SYS_History.SysData
+				ORDER BY DateTime DESC)
+		set ..%data(1,"ID") = ID
+		set ..%data(1,"DateTime") = DateTime
+		set ..%data(1,"SysCPUIdle") = SysCPUIdle
+		set ..%data(1,"SysCPUKernel") = SysCPUKernel
+		set ..%data(1,"SysCPUUser") = SysCPUUser
+		set ..%data(1,"SysLicUsedDist") = SysLicUsedDist
+		set ..%data(1,"SysLicUsedLocal") = $system.License.GetUserLimit()
+	}
+	Catch(ex) {
+		Set tSC = ex.AsStatus()
+	}
+	Quit tSC
 ]]></Implementation>
 </Method>
 </Class>

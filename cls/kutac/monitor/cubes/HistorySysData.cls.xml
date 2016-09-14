@@ -60,9 +60,9 @@ Cube definition from Architect.</Description>
   </measure>
   <measure name="SysProcesses" disabled="false" sourceProperty="SysProcesses" aggregate="AVG" type="integer" hidden="false" searchable="false">
   </measure>
-  <calculatedMember name="Sys_LicUsedLocal" displayName="License Used Local" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrSysData&quot;,&quot;SysLicUsedLocal&quot;,1)" hidden="false">
+  <calculatedMember name="Sys_LicUsedLocal" displayName="License Limit" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrSysData&quot;,&quot;SysLicUsedLocal&quot;,1)" hidden="false">
   </calculatedMember>
-  <calculatedMember name="Sys_LicUsedDist" displayName="License Used Dist." disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrSysData&quot;,&quot;SysLicUsedDist&quot;,1)" hidden="false">
+  <calculatedMember name="Sys_LicUsedDist" displayName="License Used Now" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrSysData&quot;,&quot;SysLicUsedDist&quot;,1)" hidden="false">
   </calculatedMember>
   <calculatedMember name="Sys_CPUUser" displayName="CPU User" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrSysData&quot;,&quot;SysCPUUser&quot;,1)" hidden="false">
   </calculatedMember>
