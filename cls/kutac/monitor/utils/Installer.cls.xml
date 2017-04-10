@@ -41,20 +41,6 @@
 </Namespace>
 </If>
 
-
-<Namespace Name="${Namespace}" Create="no">
-<IfDef Var="SourceDir">
-<Log Text="SourceDir defined - offline install from ${SourceDir}" Level="0"/>
-<RunInstall Class="kutac.monitor.utils.Installer" Method="OfflineInstall"/>
-</IfDef>
-
-<IfNotDef Var="SourceDir">
-<Log Text="SourceDir undefined - online install from GitHub" Level="0"/>
-<RunInstall Class="kutac.monitor.utils.Installer" Method="DownloadFromGitHub"/>
-</IfNotDef>
-</Namespace>
-
-
 <Namespace Name="${Namespace}" Create="no" Code="${Namespace}" Data="${Namespace}" Ensemble="">
 <Log Text="Mapping SYS.History package to choosed namespace." Level="0"/>
 
@@ -73,6 +59,18 @@
 <Configuration>
 <RoutineMapping From="CACHESYS" Routines="MONEXT"/>
 </Configuration>
+</Namespace>
+
+<Namespace Name="${Namespace}" Create="no">
+<IfDef Var="SourceDir">
+<Log Text="SourceDir defined - offline install from ${SourceDir}" Level="0"/>
+<RunInstall Class="kutac.monitor.utils.Installer" Method="OfflineInstall"/>
+</IfDef>
+
+<IfNotDef Var="SourceDir">
+<Log Text="SourceDir undefined - online install from GitHub" Level="0"/>
+<RunInstall Class="kutac.monitor.utils.Installer" Method="DownloadFromGitHub"/>
+</IfNotDef>
 </Namespace>
 
 <If Condition='##class(Config.Namespaces).Exists("MDX2JSON")'>
@@ -121,8 +119,23 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	set namespace = tInstaller.Evaluate("${Namespace}")
-	do EnableDeepSee^%SYS.cspServer("/csp/"_$ZCONVERT(namespace, "L")_"/")
-	quit $$$OK
+	w "Turn on DeepSee flag on "_namespace_" Web Application.", !
+	set tSC = $$$OK
+    try {
+        new $Namespace
+        set $Namespace = "%SYS"
+        
+        set tApplication = ##class(Security.Applications).%OpenId("/csp/"_$ZCONVERT(namespace, "L")_"/",,.tSC)
+        if $$$ISERR(tSC) {
+            quit
+        }
+        
+        set tApplication.DeepSeeEnabled = 1
+        set tSC = tApplication.%Save()
+    } catch e {
+        set tSC = e.AsStatus()
+    }
+    quit tSC
 ]]></Implementation>
 </Method>
 
@@ -497,19 +510,24 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 <Implementation><![CDATA[
 	Set Namespace=tInstaller.Evaluate("${Namespace}")
 	Do tInstaller.PushNS("%SYS")
-	write !, "Activating Monitor Classes"
+	
+	do ..WriteLog("Activating Monitor Classes")
 	set st2 = ..ActivatingClasses()
-	write !, "Starting Monitor", !
+	
+	do ..WriteLog("Starting Monitor")
 	set st3 = ..RunningMonitor()
-	Do tInstaller.PopNS()
-	Do tInstaller.PushNS(Namespace)
+	
 	&sql(select Name from %SYS.Task where Name = 'Rebuild SYSMON Cubes')
-	if +SQLCODE 
+	Do tInstaller.PopNS()
+	
+	Do tInstaller.PushNS(Namespace)
+		if +SQLCODE 
 	{
-		write "Creating Task",!
+		do ..WriteLog("Creating Task")
 		Do ##class(kutac.monitor.task.Builder).Setup()
 	}
 	Do tInstaller.PopNS()
+		
 	set st = $$$ADDSC(st2, st3)
 	if $$$ISERR(st) Throw ##class(%Installer.Exception).CreateFromStatus(st)
     quit $$$OK
@@ -530,7 +548,7 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
  		s class = ##class(%Monitor.ItemGroup).%OpenId(id)
  		if '$IsObject(class)
  		{ 
- 			write !,"ERROR: Class '"_cls_"' does not exist",!
+ 			do ..WriteLog("ERROR: Class '"_cls_"' does not exist")
  		}
  		else
  		{
@@ -552,7 +570,7 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 <Implementation><![CDATA[
 	s sc = ##class(%SYS.Monitor).Stop()
 	s sc1 = ##class(%SYS.Monitor).Start()
-	w "System Monitor has been restarted!", !
+	do ..WriteLog("System Monitor has been restarted!")
 	return sc1
 ]]></Implementation>
 </Method>
@@ -589,6 +607,13 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 	}
 	else{w "Please, update MDX2JSON."}
 	quit $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="WriteLog">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>text:%String</FormalSpec>
+<Implementation><![CDATA[	w !, text, !
 ]]></Implementation>
 </Method>
 
