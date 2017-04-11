@@ -125,7 +125,7 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
         new $Namespace
         set $Namespace = "%SYS"
         
-        set tApplication = ##class(Security.Applications).%OpenId("/csp/"_$ZCONVERT(namespace, "L")_"/",,.tSC)
+        set tApplication = ##class(Security.Applications).%OpenId("/csp/"_$ZCONVERT(namespace, "L"),,.tSC)
         if $$$ISERR(tSC) {
             quit
         }
