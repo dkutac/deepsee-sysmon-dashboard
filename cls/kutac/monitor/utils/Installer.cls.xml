@@ -127,6 +127,7 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
         
         set tApplication = ##class(Security.Applications).%OpenId("/csp/"_$ZCONVERT(namespace, "L"),,.tSC)
         if $$$ISERR(tSC) {
+	        do $system.Status.DisplayError(tSC)
             quit
         }
         
@@ -135,6 +136,8 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
     } catch e {
         set tSC = e.AsStatus()
     }
+    
+    do $system.Status.DisplayError(tSC)
     quit tSC
 ]]></Implementation>
 </Method>
@@ -517,15 +520,18 @@ do ##class(kutac.monitor.utils.Installer).setup(.pVars)</Description>
 	do ..WriteLog("Starting Monitor")
 	set st3 = ..RunningMonitor()
 	
-	&sql(select Name from %SYS.Task where Name = 'Rebuild SYSMON Cubes')
+	&sql(select id into :TaskID from %SYS.Task where Name = 'Rebuild SYSMON Cubes')
 	Do tInstaller.PopNS()
 	
 	Do tInstaller.PushNS(Namespace)
-		if +SQLCODE 
-	{
+	if +SQLCODE {
 		do ..WriteLog("Creating Task")
 		Do ##class(kutac.monitor.task.Builder).Setup()
+	} else {
+		do ##class(%SYS.Task).Resume(TaskID)
+		do ##class(%SYS.Task).RunNow(TaskID)
 	}
+	
 	Do tInstaller.PopNS()
 		
 	set st = $$$ADDSC(st2, st3)
