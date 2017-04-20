@@ -8,50 +8,78 @@
 <TimeCreated>63539,56609.115575</TimeCreated>
 <DependsOn>kutac.monitor.history.SysData</DependsOn>
 
-<Parameter name="DOMAIN"/>
-
 <XData name="Cube">
 <Description>
 Cube definition from Architect.</Description>
 <XMLNamespace>http://www.intersystems.com/deepsee</XMLNamespace>
 <Data><![CDATA[
-<cube xmlns="http://www.intersystems.com/deepsee" name="HistorySysData" displayName="HistorySysData" disabled="false" abstract="false" sourceClass="kutac.monitor.history.SysData" countMeasureName="%COUNT" bucketSize="8" bitmapChunkInMemory="false" precompute="0">
-  <dimension name="Measurement Date" disabled="false" hasAll="false" allCaption="All Measurement Date and Time" allDisplayName="Measurement Date and Time" sourceExpression="$zdth(%source.mTS,3)" type="time" iKnowType="entity" hidden="false" showHierarchies="default">
-    <hierarchy name="H1" disabled="false">
-      <level name="Month" disabled="false" timeFunction="MonthYear" list="false" useDisplayValue="true" useAsFilter="true">
+<cube xmlns="http://www.intersystems.com/deepsee" name="HistorySysData" displayName="HistorySysData" disabled="false" abstract="false" sourceClass="kutac.monitor.history.SysData" countMeasureName="%COUNT" bucketSize="8" bitmapChunkInMemory="false" precompute="0" disableListingGroups="false">
+  <dimension name="Measurement Date" disabled="false" hasAll="false" allCaption="All Measurement Date and Time" allDisplayName="Measurement Date and Time" sourceExpression="$zdth(%source.mTS,3)" type="time" calendar="gregorian" iKnowType="entity" hidden="false" showHierarchies="default">
+    <hierarchy name="H1" disabled="false" hidden="false">
+      <level name="Month" disabled="false" timeFunction="MonthYear" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
-      <level name="Day" disabled="false" timeFunction="DayNumber" list="false" useDisplayValue="true" useAsFilter="true">
+      <level name="Day" disabled="false" timeFunction="DayNumber" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
     </hierarchy>
   </dimension>
-  <dimension name="Measurement Time" disabled="false" hasAll="false" allCaption="All TM" allDisplayName="TM" sourceExpression="$zdth(%source.mTS,3)" type="time" iKnowType="entity" hidden="false" showHierarchies="default">
-    <hierarchy name="H1" disabled="false">
-      <level name="Hour" disabled="false" timeFunction="HourNumber" list="false" useDisplayValue="true" useAsFilter="true">
+  <dimension name="Measurement Time" disabled="false" hasAll="false" allCaption="All TM" allDisplayName="TM" sourceExpression="$zdth(%source.mTS,3)" type="time" calendar="gregorian" iKnowType="entity" hidden="false" showHierarchies="default">
+    <hierarchy name="H1" disabled="false" hidden="false">
+      <level name="Hour" disabled="false" timeFunction="HourNumber" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
-      <level name="Minute" disabled="false" timeFunction="MinuteNumber" list="false" useDisplayValue="true" useAsFilter="true">
+      <level name="Minute" disabled="false" timeFunction="MinuteNumber" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
     </hierarchy>
   </dimension>
   <dimension name="mTS" disabled="false" hasAll="false" allCaption="All mTS" allDisplayName="mTS" type="data" hidden="false" showHierarchies="default">
-    <hierarchy name="H1" disabled="false">
-      <level sourceExpression="%source.mTS" name="mTS" disabled="false" list="false" useDisplayValue="true" useAsFilter="true">
+    <hierarchy name="H1" disabled="false" hidden="false">
+      <level name="mTS" disabled="false" sourceExpression="%source.mTS" list="false" useDisplayValue="true" useAsFilter="true" hidden="false">
       </level>
     </hierarchy>
   </dimension>
-  <measure sourceProperty="SysAlerts" name="SysAlerts" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
-  <measure sourceProperty="SysAppErrors" name="SysAppErrors" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
-  <measure sourceProperty="SysCPUIdle" name="SysCPUIdle" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
-  <measure sourceProperty="SysCPUKernel" name="SysCPUKernel" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
-  <measure sourceProperty="SysCPUUser" name="SysCPUUser" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
-  <measure sourceProperty="SysCSPSession" name="SysCSPSession" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
-  <measure sourceProperty="SysECPResponse" name="SysECPResponse" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
-  <measure sourceProperty="SysJrnFiles" name="SysJrnFiles" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
-  <measure sourceProperty="SysJrnSize" name="SysJrnSize" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
-  <measure sourceProperty="SysLicUsedDist" name="SysLicUsedDist" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
-  <measure sourceProperty="SysLicUsedLocal" name="SysLicUsedLocal" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
-  <measure sourceProperty="SysProcesses" name="SysProcesses" disabled="false" aggregate="AVG" type="integer" hidden="false" searchable="false"></measure>
+  <measure name="SysAlerts" disabled="false" sourceProperty="SysAlerts" aggregate="AVG" type="integer" hidden="false" searchable="false">
+  </measure>
+  <measure name="SysAppErrors" disabled="false" sourceProperty="SysAppErrors" aggregate="AVG" type="integer" hidden="false" searchable="false">
+  </measure>
+  <measure name="SysCPUIdle" disabled="false" sourceProperty="SysCPUIdle" aggregate="AVG" type="integer" hidden="false" searchable="false">
+  </measure>
+  <measure name="SysCPUKernel" disabled="false" sourceProperty="SysCPUKernel" aggregate="AVG" type="integer" hidden="false" searchable="false">
+  </measure>
+  <measure name="SysCPUUser" disabled="false" sourceProperty="SysCPUUser" aggregate="AVG" type="integer" hidden="false" searchable="false">
+  </measure>
+  <measure name="SysCSPSession" disabled="false" sourceProperty="SysCSPSession" aggregate="AVG" type="integer" hidden="false" searchable="false">
+  </measure>
+  <measure name="SysECPResponse" disabled="false" sourceProperty="SysECPResponse" aggregate="AVG" type="integer" hidden="false" searchable="false">
+  </measure>
+  <measure name="SysJrnFiles" disabled="false" sourceProperty="SysJrnFiles" aggregate="AVG" type="integer" hidden="false" searchable="false">
+  </measure>
+  <measure name="SysJrnSize" disabled="false" sourceProperty="SysJrnSize" aggregate="AVG" type="integer" hidden="false" searchable="false">
+  </measure>
+  <measure name="SysLicUsedDist" disabled="false" sourceProperty="SysLicUsedDist" aggregate="AVG" type="integer" hidden="false" searchable="false">
+  </measure>
+  <measure name="SysLicUsedLocal" disabled="false" sourceProperty="SysLicUsedLocal" aggregate="AVG" type="integer" hidden="false" searchable="false">
+  </measure>
+  <measure name="SysProcesses" disabled="false" sourceProperty="SysProcesses" aggregate="AVG" type="integer" hidden="false" searchable="false">
+  </measure>
+  <calculatedMember name="Sys_LicUsedLocal" displayName="License Limit" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrSysData&quot;,&quot;SysLicUsedLocal&quot;,1)" hidden="false">
+  </calculatedMember>
+  <calculatedMember name="Sys_LicUsedDist" displayName="License Used Now" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrSysData&quot;,&quot;SysLicUsedDist&quot;,1)" hidden="false">
+  </calculatedMember>
+  <calculatedMember name="Sys_CPUUser" displayName="CPU User" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrSysData&quot;,&quot;SysCPUUser&quot;,1)" hidden="false">
+  </calculatedMember>
+  <calculatedMember name="Sys_CPUKernel" displayName="CPU Kernel" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrSysData&quot;,&quot;SysCPUKernel&quot;,1)" hidden="false">
+  </calculatedMember>
+  <calculatedMember name="Sys_CPUIdle" displayName="CPU Idle" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrSysData&quot;,&quot;SysCPUIdle&quot;,1)" hidden="false">
+  </calculatedMember>
+  <calculatedMember name="DateTime" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrSysData&quot;,&quot;DateTime&quot;,1)" hidden="false">
+  </calculatedMember>
+  <calculatedMember name="ID" disabled="false" dimension="Measures" valueExpression="%KPI(&quot;CurrSysData&quot;,&quot;ID&quot;,1)" hidden="false">
+  </calculatedMember>
 </cube>
 ]]></Data>
 </XData>
+
+<Parameter name="DOMAIN">
+<Default>SYSMON</Default>
+</Parameter>
 </Class>
 </Export>

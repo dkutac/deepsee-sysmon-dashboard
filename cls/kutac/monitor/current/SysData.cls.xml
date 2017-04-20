@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Export generator="Cache" version="25">
-<Class name="kutac.monitor.current.PerfData">
-<Description>
-kutac.monitor.current.PerfData</Description>
+<Class name="kutac.monitor.current.SysData">
 <Super>%DeepSee.KPI</Super>
-<TimeCreated>63327,59848.173621</TimeCreated>
+<TimeCreated>64174,58852.733443</TimeCreated>
 
 <Parameter name="DOMAIN">
 <Default>SYSMON</Default>
@@ -19,22 +17,16 @@ This XData definition defines the KPI.</Description>
 <XMLNamespace>http://www.intersystems.com/deepsee/kpi</XMLNamespace>
 <Data><![CDATA[
 <kpi xmlns="http://www.intersystems.com/deepsee/kpi"
- name="CurrPerfData" sourceType="sql"
- caption="Current Performance Data"
+ name="CurrSysData" sourceType="manual"
+ caption="Current System Data"
 >
 <property columnNo="1" name="ID" />
 <property columnNo="2" name="DateTime" />
-<property columnNo="3" name="PerfGloRef" />
-<property columnNo="4" name="PerfPhysReads" />
-<property columnNo="5" name="PerfPhysWrites" />
-<property columnNo="6" name="PerfObjHit" />
-<property columnNo="7" name="PerfObjDel" />
-<property columnNo="8" name="PerfObjMiss" />
-<property columnNo="9" name="PerfObjNew" />
-<property columnNo="10" name="PerfObjLoad" />
-<property columnNo="11" name="PerfRtnLoad" />
-<property columnNo="12" name="PerfRtnCallLocal" />
-<property columnNo="13" name="PerfWIJWrites" />
+<property columnNo="3" name="SysCPUIdle" />
+<property columnNo="4" name="SysCPUKernel" />
+<property columnNo="5" name="SysCPUUser" />
+<property columnNo="6" name="SysLicUsedDist" />
+<property columnNo="7" name="SysLicUsedLocal" />
 </kpi>
 ]]></Data>
 </XData>
@@ -54,8 +46,8 @@ Return an SQL statement to execute.</Description>
 <FormalSpec><![CDATA[&pSQL:%String]]></FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
-	set pSQL = "SELECT top 1 ID, DateTime, Perf_GloRef, Perf_PhysReads, Perf_PhysWrites, Perf_ObjHit, Perf_ObjDel, Perf_ObjMiss, Perf_ObjNew,"_
-	" Perf_ObjLoad, Perf_RtnLoad, Perf_RtnCallLocal, Perf_WIJWrites FROM SYS_History.PerfData order by DateTime Desc"
+	set pSQL = "SELECT top 1 ID, DateTime, Sys_CPUIdle, Sys_CPUKernel, Sys_CPUUser, Sys_LicUsedDist "_
+				"FROM SYS_History.SysData order by DateTime Desc"
 	Quit $$$OK
 ]]></Implementation>
 </Method>
@@ -71,6 +63,33 @@ This callback is invoked from a dashboard when an action defined by this dashboa
 	// pContext contains information from the client
 	// and can be used to return information.
 	Quit $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="%OnExecute">
+<Description>
+Get data for this KPI manually.
+This is implemented by subclasses that provide manual data.</Description>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	Set tSC = $$$OK
+	Try {
+		&sql(SELECT top 1 ID, DateTime, Sys_CPUIdle, Sys_CPUKernel, Sys_CPUUser, Sys_LicUsedDist
+				INTO :ID, :DateTime, :SysCPUIdle, :SysCPUKernel, :SysCPUUser, :SysLicUsedDist
+				FROM SYS_History.SysData
+				ORDER BY DateTime DESC)
+		set ..%data(1,"ID") = ID
+		set ..%data(1,"DateTime") = DateTime
+		set ..%data(1,"SysCPUIdle") = SysCPUIdle
+		set ..%data(1,"SysCPUKernel") = SysCPUKernel
+		set ..%data(1,"SysCPUUser") = SysCPUUser
+		set ..%data(1,"SysLicUsedDist") = SysLicUsedDist
+		set ..%data(1,"SysLicUsedLocal") = $system.License.GetUserLimit()
+	}
+	Catch(ex) {
+		Set tSC = ex.AsStatus()
+	}
+	Quit tSC
 ]]></Implementation>
 </Method>
 </Class>

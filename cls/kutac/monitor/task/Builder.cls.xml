@@ -39,25 +39,27 @@ In order to execute a real task, override this method in a subclass.]]></Descrip
 d ##class(kutac.monitor.task.Builder).Setup()</Description>
 <ClassMethod>1</ClassMethod>
 <Implementation><![CDATA[
-	&sql(select Name from %SYS.Task where Name = 'Rebuild SYSMON Cubes')
-	if +SQLCODE {
 		try {
 			set tTask=##class(%SYS.Task).%New()
 			set tTask.Name="Rebuild SYSMON Cubes"
 			set tTask.DailyFrequency=1
 			set tTask.DailyFrequencyTime=0
-			set tTask.DailyIncrement=15		// run every 15 minutes
+			set tTask.DailyIncrement=35		// run every 15 minutes
 			set tTask.DailyStartTime=28800	// 8AM
 			set tTask.DailyEndTime=64800	// 6PM
-			set tTask.StartDate=+$h+1
+			if ($p($h,",",2) >= 64800)
+				set tTask.StartDate=+$h+1
+			else
+				set tTask.StartDate=+$h
 			set tTask.Description="Rebuild System Monitor Cubes"
 			set tTask.NameSpace=$namespace
 			set tTask.TaskClass="kutac.monitor.task.Builder"
 			$$$THROWONERROR(tSC,tTask.%Save())
+			do ##class(%SYS.Task).Resume(tTask.%Id())
+			do ##class(%SYS.Task).RunNow(tTask.%Id())
 		} catch (ex) {
 			w !,ex.DisplayString()
 		}
-	}
 	quit
 ]]></Implementation>
 </Method>

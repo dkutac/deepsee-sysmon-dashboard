@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<CSP name="confpage.csp" application="/csp/sysmon/" default="1"><![CDATA[
+<html>
+	<head>
+		<link rel="stylesheet" href="./lib/css/bootstrap.min.css">
+		<title>SYSMON Configure page</title>
+	</head>
+
+<script language="javascript">
+function classChk(checked, class_name)
+{
+	checked = Number(checked);
+	#call(..WriteClassChanges(checked,class_name))#;
+}
+
+function submitAll()
+{
+	#server(..SaveAll())#;
+}
+
+function stopMon()
+{
+	#server(..StopMonitor())#;
+	checkMon();
+}
+function startMon()
+{
+	#server(..StartMonitor())#;
+	checkMon();
+}
+function docLoc(page)
+{
+	var newloc = 'http://' + window.location.host + '/csp/documatic/%25CSP.Documatic.cls?PAGE=CLASS&LIBRARY=%25SYS&CLASSNAME=%25' + page;
+	window.open(newloc,"_blank","");
+}
+function checkMon()
+{
+	#call(..CheckMon())#;
+}
+checkMon();
+</script>
+
+<csp:method name = "WriteClassChanges" Arguments="a:%Integer,b:%String">
+new $namespace
+set $namespace = "%SYS"
+set ^SYSMONClassTemp(b) = a
+</csp:method>
+
+<csp:method name = "SaveAll">
+new $namespace
+set $namespace = "%SYS"
+if $data(^SYSMONClassTemp)
+{
+	set key = $order(^SYSMONClassTemp(""))
+	while (key '= "")
+	{
+		set value = ^SYSMONClassTemp(key) 
+		do ##class(%Monitor.ItemGroup).MetricsClassItemGroup(key,.id)
+	 	set class=##class(%Monitor.ItemGroup).%OpenId(id)
+	 	set class.Activated = value
+	 	do class.%Save()
+	 	set key = $order(^SYSMONClassTemp(key))
+	}
+	kill ^SYSMONClassTemp
+	&js<alert("Settings changed")>
+	&js<location.reload()>
+	
+}
+</csp:method>
+
+<csp:method name = "StopMonitor">
+new $namespace
+set $namespace = "%SYS"
+set sc = ##class(%SYS.Monitor).Stop()
+if sc=1 {
+	&js< alert(" System Monitor stopped")>
+} elseif sc=-1 {
+	&js< alert(" System Monitor not running!")>
+} else {
+	 &js< alert("ERROR: "+#($ZE)#)>
+}
+</csp:method>
+
+<csp:method name = "StartMonitor">
+new $namespace
+set $namespace = "%SYS"
+set sc = ##class(%SYS.Monitor).Start()
+if sc=1 {
+	&js< alert("System Monitor started")>
+} elseif sc =-1 {
+	&js< alert("System Monitor already running!")>
+} else {
+	&js< alert("ERROR: "+#($ZE)#)>
+}
+</csp:method>
+
+<csp:method name = "CheckMon">
+new $namespace
+set $namespace = "%SYS"
+set sc = ##class(%SYS.Monitor).State()
+if sc=0 {
+	&js< document.getElementById('btnstart').disabled = false;
+		 document.getElementById('btnstop').disabled = true;>
+} else{
+	&js< document.getElementById('btnstop').disabled = false;
+		 document.getElementById('btnstart').disabled = true;>
+} 
+</csp:method>
+
+
+	<body>
+		<script language="cache" runat="server">
+		new $namespace
+		set $namespace = "%SYS"
+		kill ^SYSMONClassTemp
+		Set Rset = ##class(%Library.ResultSet).%New("%Monitor.ItemGroup:Classes")
+		s Rset.RuntimeMode=1
+		d Rset.Execute()
+		</script>
+
+		<div style="width: 30%; margin: auto;">
+			<div>
+				<div style="text-align: center;">
+					<h4><b>Sysmon Application Classes configuration:</b></h4>
+				</div>
+				<div style="padding: auto;">
+					<form name="configform">
+					<csp:while condition="Rset.Next()" counter="i">
+						<script language="cache" runat="server">
+							if Rset.GetData(2) {set chkd = "checked"}
+							else {set chkd = ""}
+						</script>
+						<div style="margin-bottom: 1px;" class="input-group">
+							<span style="text-align: left; font-size: 12px; padding: 4px 12px; border-right: 0px;" class="input-group-addon" >
+								<input type="checkbox" name="#(i)#" value="#(Rset.GetData(1))#" #(chkd)# onclick="classChk(this.checked, this.value)">
+							</span>
+							<span style="text-align: left; font-size: 12px; padding: 4px 12px; border-left: 0px;" class="input-group-addon">
+								<a name="#(i)#" href = "##(i)#" onClick="docLoc('#($p(Rset.GetData(1),"%",2))#'); return false;">#(Rset.GetData(1))#</a></br>
+							</span>
+						</div>
+					</csp:while>
+					<div style="margin: auto; width: 252px;">
+						<input style="margin-top: 2px; width: 250px;" class="btn btn-success" type="button" value="Apply" onclick="submitAll();"/>
+					</div>
+					</form>
+				</div>
+			</div>
+			<div style="margin-top: 3em;">
+				<div style="text-align: center;">
+						<h4><b>Control System Monitor:</b></h4>
+				</div>
+				<div style="width: 250px; margin: auto;">
+					<input id="btnstart" class="btn btn-primary" type="button" value="Start SYSMON" onclick="startMon();"/>
+					<input id="btnstop" class="btn btn-danger" type="button" value="Stop SYSMON" onclick="stopMon();"/>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+]]></CSP>
+</Export>
